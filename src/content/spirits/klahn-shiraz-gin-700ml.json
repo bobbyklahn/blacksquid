@@ -1,0 +1,18 @@
+{
+  "title": "Klahn Shiraz Gin",
+  "range": "klahn",
+  "style": "Shiraz Gin",
+  "price": 95,
+  "salePrice": 85,
+  "abv": "40%",
+  "volume": "700ml",
+  "soldOut": false,
+  "featured": true,
+  "order": 10,
+  "description": "A Shiraz Gin unlike any you've experienced before. Classic Barossa Shiraz flavours of raspberries, pepper, dark chocolate and raisins mix with the classic juniper flavours of gin to create a beverage that is opulent and balanced.\n\nIf you love Barossa Shiraz, you will love our Barossa Shiraz Gin.",
+  "serve": "Neat, over ice, or lengthened with a premium tonic.",
+  "images": [
+    "/images/products/klahn-shiraz-gin-700ml-1.webp",
+    "/images/products/klahn-shiraz-gin-700ml-2.webp"
+  ]
+}

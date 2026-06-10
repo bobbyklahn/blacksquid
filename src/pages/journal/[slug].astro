@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('journal');
+  return posts.map((p) => ({ params: { slug: p.id }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const fmt = (d) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout title={`${post.data.title} — Journal — Black Squid Distillery`} description={post.data.excerpt ?? post.data.title}>
+  <article class="wrap post-wrap">
+    <nav class="crumb"><a href="/journal">Journal</a> <span aria-hidden="true">›</span> <span>{post.data.title}</span></nav>
+    <p class="eyebrow">{fmt(post.data.date)}</p>
+    <h1>{post.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-wrap { padding-top: clamp(130px, 20vh, 190px); padding-bottom: 90px; max-width: 760px; }
+  .crumb { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 30px; }
+  .crumb a:hover { color: var(--squid); }
+  .crumb span { margin: 0 6px; }
+  h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); margin: 12px 0 30px; }
+  .prose :global(p) { margin-bottom: 18px; color: var(--muted); }
+  .prose :global(h2) { font-size: 1.5rem; margin: 34px 0 12px; }
+  .prose :global(a) { color: var(--squid); text-decoration: underline; }
+  .prose :global(img) { border-radius: 3px; margin: 24px 0; }
+</style>

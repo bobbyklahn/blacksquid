@@ -1,0 +1,19 @@
+{
+  "name": "blacksquid-distillery",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/gen-pricemap.mjs && astro dev",
+    "build": "node scripts/gen-pricemap.mjs && astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/react": "5.0.7",
+    "@astrojs/sitemap": "3.7.3",
+    "astro": "6.4.5",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "zustand": "5.0.14"
+  }
+}

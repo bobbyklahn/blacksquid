@@ -1,0 +1,17 @@
+{
+  "title": "Black Squid Shiraz Gin",
+  "range": "black-squid",
+  "style": "Estate Shiraz Gin",
+  "price": 95,
+  "salePrice": null,
+  "abv": "40%",
+  "volume": "700ml",
+  "soldOut": true,
+  "featured": false,
+  "order": 30,
+  "description": "If you love Barossa Valley Shiraz, you'll just love this Shiraz Gin. Made from award-winning grapes grown on our own Klahn Estate vineyards, pressed in our winery and then distilled on the property.\n\nA deep purple colour with palate weight and length, juniper adding brightness.",
+  "serve": "Enjoy it neat, over ice, or with tonic.",
+  "images": [
+    "/images/products/black-squid-shiraz-gin-1.webp"
+  ]
+}

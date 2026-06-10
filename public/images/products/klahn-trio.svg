@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#11161f"/><stop offset="1" stop-color="#07090d"/></linearGradient></defs>
+<rect width="300" height="400" fill="url(#g)"/>
+<g opacity="0.95">
+<path d="M75 120 h22 v12 c0 5 3 7 5 12 c2 6 10 13 10 29 v130 c0 9 -6 15 -15 15 h-22 c-9 0 -15 -6 -15 -15 v-130 c0 -16 8 -23 10 -29 c2 -5 5 -7 5 -12 z" fill="#0c1016" stroke="#5d7cf0" stroke-opacity="0.6" stroke-width="2"/>
+<path d="M139 100 h22 v12 c0 5 3 7 5 12 c2 6 10 13 10 29 v150 c0 9 -6 15 -15 15 h-22 c-9 0 -15 -6 -15 -15 v-150 c0 -16 8 -23 10 -29 c2 -5 5 -7 5 -12 z" fill="#0c1016" stroke="#c2a878" stroke-opacity="0.65" stroke-width="2"/>
+<path d="M203 120 h22 v12 c0 5 3 7 5 12 c2 6 10 13 10 29 v130 c0 9 -6 15 -15 15 h-22 c-9 0 -15 -6 -15 -15 v-130 c0 -16 8 -23 10 -29 c2 -5 5 -7 5 -12 z" fill="#0c1016" stroke="#e08cb4" stroke-opacity="0.6" stroke-width="2"/>
+<rect x="74" y="108" width="24" height="10" rx="2" fill="#5d7cf0" opacity="0.55"/>
+<rect x="138" y="88" width="24" height="10" rx="2" fill="#c2a878" opacity="0.6"/>
+<rect x="202" y="108" width="24" height="10" rx="2" fill="#e08cb4" opacity="0.55"/>
+</g>
+<text x="150" y="352" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#ecedea" letter-spacing="3">THE KLAHN TRIO</text>
+<text x="150" y="372" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#c2a878" letter-spacing="2">BLUE BVJALIE · SHIRAZ · LONDON DRY</text>
+<text x="150" y="392" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#5d6573" letter-spacing="2">PHOTO COMING — UPLOAD VIA /ADMIN</text>
+</svg>

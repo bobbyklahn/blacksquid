@@ -1,0 +1,18 @@
+{
+  "title": "Klahn Hemp Gin",
+  "range": "klahn",
+  "style": "Hemp Gin",
+  "price": 95,
+  "salePrice": 85,
+  "abv": "40%",
+  "volume": "700ml",
+  "soldOut": false,
+  "featured": false,
+  "order": 20,
+  "description": "Created using hemp seeds from low-THC Cannabis sativa plants. We source protein-rich, locally grown Australian hemp to create gluten-free, lactose-free spirits without chemical additives — a natural hemp highlight.\n\nThis refined Hemp Gin is bottled at 40%.",
+  "serve": "Best enjoyed with a premium mixer or over ice.",
+  "images": [
+    "/images/products/klahn-hemp-gin-700ml-1.webp",
+    "/images/products/klahn-hemp-gin-700ml-2.webp"
+  ]
+}

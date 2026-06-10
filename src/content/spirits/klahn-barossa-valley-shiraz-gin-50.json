@@ -1,0 +1,17 @@
+{
+  "title": "Klahn Dragon Fire Shiraz Gin",
+  "range": "klahn",
+  "style": "Cask-Strength Shiraz Gin",
+  "price": 125,
+  "salePrice": null,
+  "abv": "50%",
+  "volume": "700ml",
+  "soldOut": false,
+  "featured": false,
+  "order": 25,
+  "description": "Our boldest pour. Dragon Fire takes the estate Shiraz gin and turns everything up — bottled at a full 50% ABV, with the dark fruit, pepper and juniper carrying real heat through a long, smouldering finish.\n\nFor the drinker who orders the strong one on purpose.",
+  "serve": "Neat or over a single large cube. Approach with respect.",
+  "images": [
+    "/images/products/klahn-barossa-valley-shiraz-gin-50-1.webp"
+  ]
+}

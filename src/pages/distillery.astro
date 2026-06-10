@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const stills = [
+  {
+    name: 'Tinny',
+    size: '50L',
+    build: 'Trial still',
+    temperament: 'The test pilot',
+    note: 'Every new recipe starts inside Tinny. Fifty litres of pure experimentation \u2014 trial batches, wild botanicals, the ideas that become next year\u2019s releases.',
+    photo: '/images/distillery/still-house.webp',
+  },
+  {
+    name: 'Lucy',
+    size: '300L',
+    build: 'Copper pot still',
+    temperament: 'The hard-working beauty',
+    note: 'Lucy carries the everyday weight of the distillery — batch after batch, gin after gin, without complaint. Most of what you pour started inside her.',
+    photo: '/images/distillery/lucy.webp',
+  },
+  {
+    name: 'Katrina',
+    size: '200L',
+    build: 'Full copper still',
+    temperament: 'The purist',
+    note: 'Katrina is full copper, top to bottom — the still we turn to when a spirit needs the softest, cleanest conversation with the metal.',
+    photo: '/images/distillery/katrina.webp',
+  },
+  {
+    name: 'Bertha',
+    size: '3000L',
+    build: 'Copper still',
+    temperament: 'The new arrival. She is big.',
+    note: 'Bertha has just arrived, and she is exactly as advertised. Three thousand litres of ambition — the future of Black Squid runs through her.',
+    photo: '/images/distillery/bertha.webp',
+  },
+];
+---
+<BaseLayout
+  title="The Distillery & The Stills — Black Squid Distillery, Barossa Valley"
+  description="Black Squid Distillery sits in the heart of the Barossa Valley among the world's famous wineries. Meet Lucy, Katrina and Bertha — our three copper stills."
+>
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">The Distillery</p>
+      <h1>Wine country.<br />Ocean-dark spirits.</h1>
+      <p class="muted lede-sub">
+        Black Squid Distillery sits in the heart of the Barossa Valley, surrounded by some of the
+        world&rsquo;s most famous wineries. We grow Shiraz on our own Klahn Estate vineyards, press it
+        in our winery, and distil it on the property — vine to still to bottle, without leaving home.
+      </p>
+      <div class="stats">
+        <div><span class="k">4</span><span class="l">Stills</span></div>
+        <div><span class="k">3,550L</span><span class="l">Combined capacity</span></div>
+        <div><span class="k">Estate</span><span class="l">Own-grown Shiraz</span></div>
+        <div><span class="k">Rainwater</span><span class="l">Pure Barossa</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="pad-s">
+    <div class="wrap">
+      <p class="eyebrow brass">The Stills</p>
+      <h2 class="section-h">Four stills, four temperaments.</h2>
+      <p class="muted" style="max-width: 56ch; margin-bottom: 48px;">
+        Every still has a personality. Ours have names — and opinions.
+      </p>
+      <div class="stills-grid">
+        {stills.map((s, i) => (
+          <article class="still-card reveal">
+            <div class="still-photo">
+              <img src={s.photo} alt={`${s.name} — ${s.size} ${s.build} at Black Squid Distillery`} loading="lazy" width="400" height="300" />
+            </div>
+            <p class="eyebrow brass">{s.size} · {s.build}</p>
+            <h3>{s.name}</h3>
+            <p class="temper">“{s.temperament}”</p>
+            <p class="muted snote">{s.note}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-ink" />
+
+  <section class="pad">
+    <div class="wrap twocol">
+      <div>
+        <p class="eyebrow">From vine to still</p>
+        <h2 class="section-h">The estate behind the squid.</h2>
+        <p class="body muted">
+          The Klahn Estate vineyards grow the award-winning Shiraz that becomes our signature gins.
+          Where most distilleries buy fruit, we walk out the back door for it — which is how a gin
+          ends up tasting of raspberries, pepper, dark chocolate and the Barossa itself.
+        </p>
+        <p class="body muted">
+          Bottled with pure Barossa Valley rainwater, finished in small batches, and named after the
+          one creature you'd never expect to find this far from the sea.
+        </p>
+        <p style="margin-top: 28px;"><a class="btn ghost" href="/gins">Taste the result</a> <a class="btn ghost" href="/contract-distilling" style="margin-left: 10px;">Distil with us</a></p>
+      </div>
+      <div class="estate-photo reveal">
+        <img src="/images/distillery/building-front.webp" alt="The Black Squid Distillery building, Barossa Valley" loading="lazy" width="800" height="600" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(40px, 6vh, 70px); }
+  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0 18px; }
+  .lede-sub { max-width: 62ch; font-size: 1.02rem; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 54px; border-top: 1px solid var(--line); padding-top: 34px; }
+  @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+  .stats .k { font-family: var(--serif); font-size: 1.9rem; color: var(--brass); display: block; }
+  .stats .l { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 6px; display: block; }
+
+  .stills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: start; }
+  @media (max-width: 1060px) { .stills-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 580px) { .stills-grid { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; } }
+  .still-card { border: 1px solid var(--line); background: var(--ink-2); padding: 26px 28px 30px; border-radius: 3px; }
+  .still-photo {
+    aspect-ratio: 4 / 3; border-radius: 2px; overflow: hidden; margin-bottom: 22px;
+    border: 1px solid var(--line); background: var(--ink-3);
+  }
+  .still-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .still-card:hover .still-photo img { transform: scale(1.04); }
+  .still-card h3 { font-size: 2rem; margin: 8px 0 4px; }
+  .temper { font-style: italic; color: var(--paper); font-family: var(--serif); font-size: 1.05rem; margin-bottom: 12px; }
+  .snote { font-size: 0.9rem; }
+  .estate-photo { border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
+  .estate-photo img { width: 100%; height: 100%; object-fit: cover; }
+</style>

@@ -1,0 +1,226 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AddToCart from '../components/AddToCart.jsx';
+import { fmtPrice } from '../lib/format.js';
+
+const spirits = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
+const featured = spirits.filter((s) => s.data.featured).slice(0, 3);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Distillery',
+  name: 'Black Squid Distillery',
+  url: 'https://www.blacksquiddistillery.com.au',
+  email: 'admin@blacksquiddistillery.com.au',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '960 Light Pass Road',
+    addressLocality: 'Vine Vale',
+    addressRegion: 'SA',
+    postalCode: '5352',
+    addressCountry: 'AU',
+  },
+};
+---
+<BaseLayout
+  title="Black Squid Distillery — Small-batch gin from the Barossa Valley"
+  description="Black Squid Distillery turns gin into magic in the heart of the Barossa Valley — from colour-changing Blue Bvjalie to estate-grown Shiraz gin. Witchcraft with pure science."
+  jsonLd={jsonLd}
+>
+  <!-- ============ HERO — the ink ============ -->
+  <section id="hero" class="hero">
+    <div class="poster" aria-hidden="true"></div>
+    <canvas id="ink" aria-hidden="true"></canvas>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="hero-copy">
+      <p class="eyebrow reveal in">Barossa Valley · South Australia</p>
+      <h1>BLACK SQUID</h1>
+      <p class="lead">Gin in the new era — distilled among the world&rsquo;s most famous wineries.<br />
+        <em>Witchcraft, with pure science.</em></p>
+      <a class="btn" href="/gins">Explore the gins</a>
+    </div>
+    <div class="scroll-hint">Scroll — watch the ink turn</div>
+  </section>
+
+  <!-- ============ THE COLOUR CHANGE ============ -->
+  <section class="pad">
+    <div class="wrap twocol">
+      <div>
+        <p class="eyebrow blush reveal">The Colour Change</p>
+        <h2 class="section-h reveal">Blue, until the tonic hits.</h2>
+        <p class="body muted reveal">
+          Our Blue Bvjalie Gin steeps in blue butterfly pea flower for seventy-two hours, then is
+          refined with pure Barossa Valley rainwater. Add tonic, lemon or lime — anything of low pH —
+          and it turns from deep ocean blue to blossom pink, right there in the glass.
+        </p>
+        <p class="body muted reveal">The page you&rsquo;re on does the same. Keep scrolling.</p>
+        <p class="reveal" style="margin-top: 28px;">
+          <a class="btn ghost" href="/gins/klahn-blue-bvjalie-gin-700ml">Meet Blue Bvjalie</a>
+        </p>
+      </div>
+      <div class="reveal colorchange-demo" aria-hidden="true">
+        <div class="cc-glass cc-blue"></div>
+        <div class="cc-arrow">+ tonic →</div>
+        <div class="cc-glass cc-pink"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-ink" />
+
+  <!-- ============ TWO RANGES ============ -->
+  <section class="pad">
+    <div class="wrap">
+      <p class="eyebrow reveal">The Collections</p>
+      <h2 class="section-h reveal">Two ranges. One distillery.</h2>
+      <div class="ranges">
+        <a class="range-card reveal" href="/gins#klahn">
+          <p class="eyebrow brass">Klahn Estate</p>
+          <h3>The craft range</h3>
+          <p class="muted">
+            Named for our own Klahn Estate vineyards — London Dry, Hemp, the colour-changing
+            Blue Bvjalie, and Shiraz gins built on estate fruit.
+          </p>
+          <span class="range-cta">Browse Klahn →</span>
+        </a>
+        <a class="range-card reveal" href="/gins#black-squid">
+          <p class="eyebrow">Black Squid</p>
+          <h3>The signature range</h3>
+          <p class="muted">
+            The namesake: deep, vivid Barossa Shiraz gins — wine-country fruit pressed in our
+            winery and distilled on the property.
+          </p>
+          <span class="range-cta">Browse Black Squid →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED ============ -->
+  <section class="pad" style="padding-top: 0;">
+    <div class="wrap">
+      <p class="eyebrow reveal">From the still</p>
+      <h2 class="section-h reveal">Pouring now</h2>
+      <div class="grid-3">
+        {featured.map((s) => (
+          <article class="pcard reveal">
+            <a href={`/gins/${s.id}`} class="pimg">
+              <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
+            </a>
+            <p class="pmeta">
+              <span class={s.data.range === 'klahn' ? 'range-k' : 'range-b'}>
+                {s.data.range === 'klahn' ? 'Klahn' : 'Black Squid'}
+              </span>
+              {' '}· {s.data.style} · {s.data.abv}
+            </p>
+            <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
+            <div class="prow">
+              <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
+              <AddToCart client:visible slug={s.id} title={s.data.title} price={s.data.salePrice ?? s.data.price} soldOut={s.data.soldOut} />
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="center reveal" style="margin-top: 48px;">
+        <a class="btn ghost" href="/gins">See all the gins</a>
+      </p>
+    </div>
+  </section>
+
+  <hr class="divider-ink" />
+
+  <!-- ============ THE STILLS TEASER ============ -->
+  <section class="pad">
+    <div class="wrap twocol">
+      <div class="stills-mini reveal" aria-hidden="true">
+        <div class="still-dot" style="--h: 30px;"><span>Tinny · 50L</span></div>
+        <div class="still-dot" style="--h: 64px;"><span>Lucy · 300L</span></div>
+        <div class="still-dot" style="--h: 48px;"><span>Katrina · 200L</span></div>
+        <div class="still-dot" style="--h: 120px;"><span>Bertha · 3000L</span></div>
+      </div>
+      <div>
+        <p class="eyebrow reveal">The Distillery</p>
+        <h2 class="section-h reveal">Tinny, Lucy, Katrina &amp; big Bertha.</h2>
+        <p class="body muted reveal">
+          Four stills in the heart of the Barossa, each with her own temperament: Tinny the
+          50-litre test pilot, Lucy the hard-working beauty, Katrina the full-copper purist —
+          and Bertha, our new 3,000-litre arrival, exactly as big as she sounds.
+        </p>
+        <p class="reveal" style="margin-top: 28px;">
+          <a class="btn ghost" href="/distillery">Meet the stills</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCES STRIP ============ -->
+  <section class="pad-s" style="background: var(--ink-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="wrap center">
+      <p class="eyebrow reveal">Experiences</p>
+      <h2 class="section-h reveal" style="font-size: clamp(1.6rem, 3.5vw, 2.4rem);">The tasting bar opens by arrangement.</h2>
+      <p class="muted reveal" style="max-width: 56ch; margin: 0 auto 28px;">
+        Our distillery tasting bar isn&rsquo;t open to the public day-to-day — but private tastings
+        can be arranged. Tell us what you&rsquo;re celebrating.
+      </p>
+      <a class="btn reveal" href="/experiences">Enquire about a tasting</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { position: relative; height: 100svh; min-height: 600px; display: grid; place-items: center; overflow: hidden; }
+  .hero .poster, .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero .poster {
+    background:
+      radial-gradient(90% 70% at 70% 20%, rgba(93, 124, 240, 0.22), transparent 60%),
+      radial-gradient(80% 60% at 25% 80%, rgba(224, 140, 180, 0.12), transparent 55%),
+      radial-gradient(120% 100% at 50% 40%, #0d1322 0%, var(--ink) 70%);
+  }
+  .hero canvas { opacity: 0; transition: opacity 1.6s ease; }
+  .hero .veil { position: absolute; inset: 0; background: radial-gradient(72% 56% at 50% 48%, transparent 0%, rgba(7, 9, 13, 0.62) 100%); }
+  .hero-copy { position: relative; z-index: 3; text-align: center; padding: 0 20px; }
+  .hero-copy h1 {
+    font-size: clamp(3.2rem, 11vw, 8.5rem);
+    letter-spacing: 0.06em;
+    margin: 10px 0 6px;
+  }
+  .hero-copy .lead { color: var(--muted); font-size: clamp(0.98rem, 1.6vw, 1.2rem); letter-spacing: 0.03em; margin-bottom: 36px; line-height: 1.8; }
+  .hero-copy .lead em { color: var(--paper); font-style: italic; }
+  .scroll-hint {
+    position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 3;
+    font-size: 0.64rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); opacity: 0.85;
+  }
+
+  .colorchange-demo { display: flex; align-items: center; justify-content: center; gap: 18px; }
+  .cc-glass { width: clamp(90px, 12vw, 150px); aspect-ratio: 3 / 4; border-radius: 4px 4px 10px 10px; border: 1px solid var(--line-strong); position: relative; overflow: hidden; }
+  .cc-glass::after { content: ''; position: absolute; inset: 22% 8% 6% 8%; border-radius: 2px 2px 8px 8px; }
+  .cc-blue::after { background: linear-gradient(to bottom, #2b3a8f, #5d7cf0); box-shadow: 0 0 34px rgba(93, 124, 240, 0.35); }
+  .cc-pink::after { background: linear-gradient(to bottom, #b85c8a, #e08cb4); box-shadow: 0 0 34px rgba(224, 140, 180, 0.3); }
+  .cc-arrow { color: var(--muted); font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; }
+
+  .ranges { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 36px; }
+  @media (max-width: 840px) { .ranges { grid-template-columns: 1fr; } }
+  .range-card {
+    border: 1px solid var(--line); background: var(--ink-2); padding: 40px 36px; border-radius: 3px;
+    transition: border-color 0.4s var(--ease), transform 0.5s var(--ease);
+  }
+  .range-card:hover { border-color: var(--line-strong); transform: translateY(-4px); }
+  .range-card h3 { font-size: 1.9rem; margin: 12px 0 12px; }
+  .range-card .muted { font-size: 0.95rem; }
+  .range-cta { display: inline-block; margin-top: 22px; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--squid); }
+
+  .stills-mini { display: flex; align-items: flex-end; justify-content: center; gap: clamp(20px, 4vw, 44px); min-height: 220px; }
+  .still-dot { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .still-dot::before {
+    content: ''; width: clamp(44px, 6vw, 64px); height: var(--h);
+    background: linear-gradient(to bottom, #2a2017, #14100b);
+    border: 1px solid rgba(194, 168, 120, 0.5); border-radius: 50% 50% 6px 6px / 38% 38% 6px 6px;
+  }
+  .still-dot span { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brass); }
+</style>
+
+<script>
+  import { initInkHero } from '../scripts/ink-hero.js';
+  initInkHero('ink');
+</script>

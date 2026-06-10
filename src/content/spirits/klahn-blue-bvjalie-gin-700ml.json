@@ -1,0 +1,18 @@
+{
+  "title": "Klahn Blue Bvjalie Gin",
+  "range": "klahn",
+  "style": "Colour-Changing Gin",
+  "price": 95,
+  "salePrice": 85,
+  "abv": "40%",
+  "volume": "700ml",
+  "soldOut": false,
+  "featured": true,
+  "order": 5,
+  "description": "Our unique Blue Bvjalie Gin is infused with blue butterfly pea flower for seventy-two hours to give the gin its distinctive colour, then refined with pure Barossa Valley rainwater.\n\nMix it with anything of low pH — tonic, lemon water, lime juice — and the colour changes dramatically from deep blue to blossom pink. It's witchcraft with pure science.",
+  "serve": "Pour over ice, add tonic, and watch it turn.",
+  "images": [
+    "/images/products/klahn-blue-bvjalie-gin-700ml-1.webp",
+    "/images/products/klahn-blue-bvjalie-gin-700ml-2.webp"
+  ]
+}

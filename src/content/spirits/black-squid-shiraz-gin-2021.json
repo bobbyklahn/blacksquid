@@ -1,0 +1,17 @@
+{
+  "title": "Black Squid Barossa Valley Shiraz Gin",
+  "range": "black-squid",
+  "style": "Shiraz Gin",
+  "price": 95,
+  "salePrice": null,
+  "abv": "40%",
+  "volume": "700ml",
+  "soldOut": false,
+  "featured": true,
+  "order": 1,
+  "description": "Pure and vibrant red in colour. Black Squid opens with the aromas of a classic Barossa Shiraz with lifted herbal and juniper characters. Delicate spice flavours mix with sweet fruits, fresh blueberries and raspberries; pepper spice with bittersweet chocolate and raisins finish the palate.\n\nIt's as unique a \"gin\" as you'll ever encounter.",
+  "serve": "Neat, over ice, or with tonic and a few dark berries.",
+  "images": [
+    "/images/products/black-squid-shiraz-gin-2021-1.webp"
+  ]
+}

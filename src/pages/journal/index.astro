@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('journal')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = (d) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout
+  title="Journal — Black Squid Distillery"
+  description="News from the still-house: releases, experiments and life in the Barossa Valley."
+>
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Journal</p>
+      <h1>From the still-house.</h1>
+    </div>
+  </header>
+
+  <section class="pad-s">
+    <div class="wrap">
+      {posts.length === 0 && <p class="muted">Nothing inked yet — check back soon.</p>}
+      <div class="posts">
+        {posts.map((p) => (
+          <a class="post reveal" href={`/journal/${p.id}`}>
+            <p class="pdate">{fmt(p.data.date)}</p>
+            <h2>{p.data.title}</h2>
+            {p.data.excerpt && <p class="muted">{p.data.excerpt}</p>}
+            <span class="more">Read →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(20px, 4vh, 40px); }
+  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0; }
+  .posts { display: grid; gap: 26px; max-width: 760px; }
+  .post { border: 1px solid var(--line); background: var(--ink-2); padding: 32px 34px; border-radius: 3px; transition: border-color 0.4s; }
+  .post:hover { border-color: var(--line-strong); }
+  .pdate { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--squid); margin-bottom: 8px; }
+  .post h2 { font-size: 1.6rem; margin-bottom: 8px; }
+  .more { display: inline-block; margin-top: 14px; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--squid); }
+</style>

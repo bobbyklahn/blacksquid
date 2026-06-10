@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const EMAIL = 'admin@blacksquiddistillery.com.au';
+const subject = encodeURIComponent('Tasting bar enquiry');
+const body = encodeURIComponent(
+  'Hello Black Squid,\n\nWe would love to arrange a visit to the tasting bar.\n\nPreferred date(s):\nGroup size:\nThe occasion:\n\nName:\nPhone:'
+);
+---
+<BaseLayout
+  title="Experiences & Tastings — Black Squid Distillery"
+  description="The Black Squid distillery tasting bar opens by arrangement — private tastings in the heart of the Barossa Valley. Email us to plan your visit."
+>
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Experiences</p>
+      <h1>Have the experience.</h1>
+      <p class="muted" style="max-width: 56ch;">
+        The distilling bar is currently not open to the public on a walk-in basis — which makes a
+        visit all the better. Private tastings at the still-house can be arranged: small groups,
+        the gins in order, and the colour change performed live.
+      </p>
+    </div>
+  </header>
+
+  <section class="pad-s">
+    <div class="wrap twocol">
+      <div class="exp-card">
+        <p class="eyebrow blush">By arrangement</p>
+        <h2 style="font-size: clamp(1.6rem, 3.4vw, 2.4rem); margin: 10px 0 14px;">Distillery tasting bar</h2>
+        <p class="muted body">
+          Tell us when you&rsquo;d like to come, how many of you there are, and what you&rsquo;re
+          celebrating. We&rsquo;ll reply with available times and what&rsquo;s pouring.
+        </p>
+        <a class="btn" style="margin-top: 26px;" href={`mailto:${EMAIL}?subject=${subject}&body=${body}`}>
+          Enquire by email
+        </a>
+        <p class="muted" style="font-size: 0.74rem; margin-top: 14px;">{EMAIL}</p>
+      </div>
+      <div class="exp-photo reveal">
+        <img src="/images/distillery/still-house.webp" alt="Inside the Black Squid still-house" loading="lazy" width="800" height="600" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(30px, 5vh, 60px); }
+  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0 18px; }
+  .exp-card { border: 1px solid var(--line); background: var(--ink-2); padding: 44px 38px; border-radius: 3px; }
+  .exp-photo { border: 1px solid var(--line); border-radius: 3px; overflow: hidden; aspect-ratio: 4 / 3; }
+  .exp-photo img { width: 100%; height: 100%; object-fit: cover; }
+</style>

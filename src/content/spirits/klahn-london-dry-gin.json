@@ -1,0 +1,20 @@
+{
+  "title": "Klahn London Dry Gin",
+  "range": "klahn",
+  "style": "London Dry Gin",
+  "price": 95,
+  "salePrice": 85,
+  "abv": "40%",
+  "volume": "700ml",
+  "soldOut": false,
+  "featured": true,
+  "order": 15,
+  "description": "A beautiful handcrafted gin, made and bottled in the Barossa Valley. A contemporary take on a London Dry, distilled with eleven botanicals including juniper, cassia stick and orange peel — warmth, depth and savoury spice.\n\nA classic gin at heart: full-bodied and fresh, with clarity and balance. A rich, clean, juniper-driven spirit.",
+  "serve": "The G&T benchmark — ice, good tonic, a twist of orange.",
+  "images": [
+    "/images/products/klahn-london-dry-gin-1.webp",
+    "/images/products/klahn-london-dry-gin-2.webp",
+    "/images/products/klahn-london-dry-gin-3.webp",
+    "/images/products/klahn-london-dry-gin-4.webp"
+  ]
+}

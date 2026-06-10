@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const EMAIL = 'admin@blacksquiddistillery.com.au';
+---
+<BaseLayout
+  title="Contact — Black Squid Distillery, Vine Vale, Barossa Valley"
+  description="Black Squid Distillery — 960 Light Pass Road, Vine Vale, Barossa Valley SA 5352. Email admin@blacksquiddistillery.com.au."
+>
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1>Find the squid.</h1>
+    </div>
+  </header>
+
+  <section class="pad-s">
+    <div class="wrap twocol" style="align-items: start;">
+      <div>
+        <div class="block">
+          <h2>The distillery</h2>
+          <p class="muted">
+            960 Light Pass Road<br />
+            Vine Vale, Barossa Valley<br />
+            South Australia 5352
+          </p>
+        </div>
+        <div class="block">
+          <h2>Talk to us</h2>
+          <p class="muted">
+            Darin Kinzie<br />
+            <a href={`mailto:${EMAIL}`} style="color: var(--squid);">{EMAIL}</a>
+          </p>
+        </div>
+        <div class="block">
+          <h2>Trade &amp; wholesale</h2>
+          <p class="muted">
+            Spirits for venues and bottle shops — <a href={`mailto:${EMAIL}?subject=Trade%20enquiry`} style="color: var(--squid);">trade enquiry</a>.<br />
+            Bottles &amp; closures — <a href="/spak" style="color: var(--squid);">SPAK trade supply</a>.
+          </p>
+        </div>
+        <div class="block">
+          <h2>Follow</h2>
+          <p class="muted">
+            <a href="https://www.instagram.com/blacksquiddistillery" target="_blank" rel="noopener">Instagram</a> ·
+            <a href="https://www.facebook.com/blacksquiddistillery" target="_blank" rel="noopener">Facebook</a>
+          </p>
+        </div>
+      </div>
+
+      <form class="contact-form" action={`mailto:${EMAIL}`} method="post" enctype="text/plain">
+        <p class="eyebrow" style="margin-bottom: 6px;">Quick message</p>
+        <label for="cf-name">Name</label>
+        <input id="cf-name" name="name" required />
+        <label for="cf-email">Your email</label>
+        <input id="cf-email" name="email" type="email" required />
+        <label for="cf-msg">Message</label>
+        <textarea id="cf-msg" name="message" rows="5" required></textarea>
+        <button class="btn" type="submit" style="margin-top: 20px;">Send</button>
+        <p class="muted" style="font-size: 0.7rem; margin-top: 12px;">Opens in your email app.</p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(20px, 4vh, 40px); }
+  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0; }
+  .block { margin-bottom: 34px; }
+  .block h2 { font-size: 1.2rem; margin-bottom: 8px; }
+  .block a:hover { text-decoration: underline; }
+  .contact-form { border: 1px solid var(--line); background: var(--ink-2); padding: 36px 32px; border-radius: 3px; }
+</style>

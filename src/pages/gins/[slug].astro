@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AddToCart from '../../components/AddToCart.jsx';
+import { fmtPrice } from '../../lib/format.js';
+
+export async function getStaticPaths() {
+  const spirits = await getCollection('spirits');
+  return spirits.map((s) => ({ params: { slug: s.id }, props: { spirit: s } }));
+}
+
+const { spirit } = Astro.props;
+const d = spirit.data;
+const all = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
+const others = all.filter((s) => s.id !== spirit.id).slice(0, 3);
+const paras = d.description.split('\n').filter(Boolean);
+const effective = d.salePrice ?? d.price;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: d.title,
+  description: paras[0],
+  image: new URL(d.images[0] ?? '/images/og-default.svg', Astro.site).toString(),
+  brand: { '@type': 'Brand', name: d.range === 'klahn' ? 'Klahn Estate' : 'Black Squid Distillery' },
+  offers: {
+    '@type': 'Offer',
+    price: effective.toFixed(2),
+    priceCurrency: 'AUD',
+    availability: d.soldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+    url: new URL(`/gins/${spirit.id}`, Astro.site).toString(),
+  },
+};
+---
+<BaseLayout title={`${d.title} ${d.volume ?? ''} — Black Squid Distillery`} description={paras[0]} jsonLd={jsonLd}>
+  <div class="wrap product-wrap">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/gins">Our Gins</a> <span aria-hidden="true">›</span> <span>{d.title}</span>
+    </nav>
+
+    <div class="twocol" style="align-items: start;">
+      <div class="gallery">
+        <div class="main-img">
+          <img src={d.images[0]} alt={`${d.title} bottle`} width="600" height="800" />
+        </div>
+      </div>
+
+      <div class="pdetail">
+        <p class={`eyebrow ${d.range === 'klahn' ? 'brass' : ''}`}>
+          {d.range === 'klahn' ? 'Klahn Estate range' : 'Black Squid range'}
+        </p>
+        <h1>{d.title}</h1>
+        <p class="pmeta-line muted">{d.style} · {d.abv} ABV · {d.volume}</p>
+        <p class="price big" set:html={fmtPrice(d.price, d.salePrice)} />
+
+        {paras.map((p) => <p class="body muted">{p}</p>)}
+
+        {d.serve && (
+          <p class="serve"><strong>Serve —</strong> {d.serve}</p>
+        )}
+
+        <div class="buy-row">
+          <AddToCart client:load slug={spirit.id} title={d.title} price={effective} soldOut={d.soldOut} big />
+        </div>
+        <p class="fine muted">
+          18+ only. Adult signature required on delivery. Secure checkout via Stripe — card or Apple&nbsp;Pay.
+        </p>
+      </div>
+    </div>
+
+    <section class="pad-s">
+      <p class="eyebrow">Keep exploring</p>
+      <h2 class="section-h" style="font-size: clamp(1.6rem, 3vw, 2.2rem);">You might also like</h2>
+      <div class="grid-3">
+        {others.map((s) => (
+          <article class="pcard">
+            <a href={`/gins/${s.id}`} class="pimg">
+              <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
+            </a>
+            <h3 style="font-size: 1.1rem;"><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
+            <div class="prow">
+              <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
+              {s.data.soldOut && <span class="tag soldout">Sold out</span>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .product-wrap { padding-top: clamp(120px, 18vh, 170px); }
+  .crumb { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 34px; }
+  .crumb a:hover { color: var(--squid); }
+  .crumb span { margin: 0 6px; }
+  .gallery .main-img {
+    border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+    background: radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));
+  }
+  .gallery img { width: 100%; height: auto; object-fit: contain; }
+  .pdetail h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); margin: 10px 0 8px; }
+  .pmeta-line { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }
+  .price.big { font-size: 1.9rem; margin-bottom: 26px; display: block; }
+  .serve { margin-top: 22px; padding: 16px 18px; border-left: 2px solid var(--squid); background: var(--ink-2); font-size: 0.92rem; color: var(--muted); }
+  .serve strong { color: var(--paper); font-weight: 500; }
+  .buy-row { margin-top: 30px; }
+  .fine { font-size: 0.72rem; margin-top: 14px; line-height: 1.7; }
+</style>

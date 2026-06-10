@@ -1,0 +1,136 @@
+---
+import '../styles/global.css';
+import AgeGate from '../components/AgeGate.jsx';
+import CartWidget from '../components/CartWidget.jsx';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** hide the spirits cart on trade pages */
+  noCart?: boolean;
+  ogImage?: string;
+  jsonLd?: object;
+}
+const {
+  title,
+  description = 'Black Squid Distillery — small-batch gin distilled in the heart of the Barossa Valley, South Australia. Witchcraft with pure science.',
+  noCart = false,
+  ogImage = '/images/og-default.svg',
+  jsonLd,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,480;9..144,560&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body>
+  <AgeGate client:load />
+
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="/" aria-label="Black Squid Distillery — home">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="2.4" />
+        <path d="M14 27c0-6 4.5-10.5 10-10.5S34 21 34 27c0 2.4-1 4-2.6 4-1.4 0-2.2-1-2.2-2.6 0-2.8-2-4.9-5.2-4.9s-5.2 2.1-5.2 4.9c0 1.6-.8 2.6-2.2 2.6C15 31 14 29.4 14 27Z" fill="currentColor" />
+        <path d="M19 31.5c.2 2-.6 3.8-2.4 5M24 32.5v5.2M29 31.5c-.2 2 .6 3.8 2.4 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+      <span class="wordmark">BLACK SQUID<small>DISTILLERY · BAROSSA VALLEY</small></span>
+    </a>
+    <div class="nav-right">
+      <div class="links" id="nav-links">
+        <a href="/gins">Our Gins</a>
+        <a href="/distillery">The Distillery</a>
+        <a href="/contract-distilling">Custom Distilling</a>
+        <a href="/experiences">Experiences</a>
+        <a href="/journal">Journal</a>
+        <a href="/contact">Contact</a>
+      </div>
+      {!noCart && <CartWidget client:load />}
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="fgrid">
+        <div style="max-width: 300px;">
+          <h4>Black Squid Distillery</h4>
+          <p class="fcol">
+            960 Light Pass Road,<br />
+            Vine Vale, Barossa Valley<br />
+            South Australia 5352
+          </p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <p class="fcol">
+            <a href="/gins">Our Gins</a><br />
+            <a href="/distillery">The Stills</a><br />
+            <a href="/experiences">Tastings</a><br />
+            <a href="/journal">Journal</a>
+          </p>
+        </div>
+        <div>
+          <h4>Trade</h4>
+          <p class="fcol">
+            <a href="/contract-distilling">Custom &amp; contract distilling</a><br />
+            <a href="/spak">SPAK — bottles &amp; closures</a><br />
+            <a href="mailto:admin@blacksquiddistillery.com.au">Wholesale enquiries</a>
+          </p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p class="fcol">
+            <a href="mailto:admin@blacksquiddistillery.com.au">admin@blacksquiddistillery.com.au</a><br />
+            <a href="https://www.instagram.com/blacksquiddistillery" rel="noopener" target="_blank">Instagram</a> ·
+            <a href="https://www.facebook.com/blacksquiddistillery" rel="noopener" target="_blank">Facebook</a>
+          </p>
+        </div>
+      </div>
+      <p class="legal">
+        © {year} Black Squid Distillery. All rights reserved. ABN 92 645 592 945 · Liquor Licence No. [TODO — add before launch]<br />
+        We support the responsible service and consumption of alcohol. It is against the law to sell or supply alcohol to,
+        or to obtain alcohol on behalf of, a person under the age of 18 years. <a href="https://drinkwise.org.au" rel="noopener" target="_blank" style="text-decoration: underline;">DrinkWise</a>.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // mobile nav
+    const t = document.querySelector('.nav-toggle');
+    const links = document.getElementById('nav-links');
+    t?.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      t.setAttribute('aria-expanded', String(open));
+    });
+    // scroll reveals
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add('in'), io.unobserve(e.target))),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>

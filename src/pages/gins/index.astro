@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AddToCart from '../../components/AddToCart.jsx';
+import { fmtPrice } from '../../lib/format.js';
+
+const spirits = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
+const klahn = spirits.filter((s) => s.data.range === 'klahn');
+const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
+---
+<BaseLayout
+  title="Our Gins — Black Squid Distillery, Barossa Valley"
+  description="Shiraz gin, colour-changing Blue Bvjalie, Hemp gin and a classic London Dry — small-batch spirits distilled in the Barossa Valley. Two ranges: Klahn Estate and Black Squid."
+>
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">The Collection</p>
+      <h1>Our Gins</h1>
+      <p class="muted" style="max-width: 58ch;">
+        At Black Squid we turn gin into magic — from the colour-changing Blue Bvjalie to estate-grown
+        Barossa Shiraz gin. Every bottle leaves the property the colour of intent.
+      </p>
+      <nav class="range-jump" aria-label="Jump to range">
+        <a href="#black-squid">Black Squid range</a>
+        <a href="#klahn">Klahn Estate range</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="black-squid" class="pad-s">
+    <div class="wrap">
+      <p class="eyebrow">The signature range</p>
+      <h2 class="section-h">Black Squid</h2>
+      <div class="grid-3">
+        {blackSquid.map((s) => (
+          <article class="pcard reveal">
+            <a href={`/gins/${s.id}`} class="pimg">
+              <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
+            </a>
+            <p class="pmeta"><span class="range-b">Black Squid</span> · {s.data.style} · {s.data.abv}</p>
+            <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
+            <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
+            <div class="prow">
+              <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
+              <AddToCart client:visible slug={s.id} title={s.data.title} price={s.data.salePrice ?? s.data.price} soldOut={s.data.soldOut} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider-ink" />
+
+  <section id="klahn" class="pad-s">
+    <div class="wrap">
+      <p class="eyebrow brass">The craft range</p>
+      <h2 class="section-h">Klahn Estate</h2>
+      <div class="grid-3">
+        {klahn.map((s) => (
+          <article class="pcard reveal">
+            <a href={`/gins/${s.id}`} class="pimg">
+              <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
+            </a>
+            <p class="pmeta"><span class="range-k">Klahn</span> · {s.data.style} · {s.data.abv}</p>
+            <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
+            <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
+            <div class="prow">
+              <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
+              <AddToCart client:visible slug={s.id} title={s.data.title} price={s.data.salePrice ?? s.data.price} soldOut={s.data.soldOut} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pad-s">
+    <div class="wrap center">
+      <p class="muted" style="font-size: 0.85rem;">
+        Buying for a venue or bottle shop? <a href="mailto:admin@blacksquiddistillery.com.au" style="color: var(--squid); text-decoration: underline;">Email us for trade pricing.</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(30px, 5vh, 60px); }
+  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0 16px; }
+  .range-jump { display: flex; gap: 22px; margin-top: 26px; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .range-jump a { border-bottom: 1px solid var(--line-strong); padding-bottom: 4px; transition: color 0.3s, border-color 0.3s; }
+  .range-jump a:hover { color: var(--squid); border-color: var(--squid); }
+</style>
