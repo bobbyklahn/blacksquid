@@ -29,6 +29,7 @@ export default function AgeGate() {
   return (
     <div role="dialog" aria-modal="true" aria-label="Age verification" style={st.veil}>
       <div style={st.card}>
+        <div style={st.inkline} aria-hidden="true" />
         <svg viewBox="0 0 48 48" fill="none" style={{ height: 52, margin: '0 auto 18px', display: 'block', color: '#5d7cf0' }} aria-hidden="true">
           <circle cx="24" cy="24" r="21" stroke="currentColor" strokeWidth="2.4" />
           <path d="M14 27c0-6 4.5-10.5 10-10.5S34 21 34 27c0 2.4-1 4-2.6 4-1.4 0-2.2-1-2.2-2.6 0-2.8-2-4.9-5.2-4.9s-5.2 2.1-5.2 4.9c0 1.6-.8 2.6-2.2 2.6C15 31 14 29.4 14 27Z" fill="currentColor" />
@@ -55,7 +56,8 @@ const st = {
     background: 'radial-gradient(120% 100% at 50% 0%, rgba(12,16,22,0.97), rgba(7,9,13,0.99))',
     display: 'grid', placeItems: 'center', padding: 20, backdropFilter: 'blur(6px)',
   },
-  card: { maxWidth: 430, textAlign: 'center', padding: '46px 34px', border: '1px solid rgba(141,150,163,0.25)', background: '#0c1016', borderRadius: 4 },
+  card: { maxWidth: 430, textAlign: 'center', padding: '46px 34px', border: '1px solid rgba(141,150,163,0.25)', background: '#0c1016', borderRadius: 4, position: 'relative', overflow: 'hidden' },
+  inkline: { position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(to right, transparent, #2b3a8f, #e08cb4, transparent)' },
   h: { fontFamily: "'Fraunces', Georgia, serif", fontWeight: 480, fontSize: '1.7rem', lineHeight: 1.15, margin: '0 0 14px', color: '#ecedea' },
   p: { color: '#8d96a3', fontSize: '0.92rem', lineHeight: 1.7, margin: '0 0 26px' },
   row: { display: 'flex', flexDirection: 'column', gap: 10 },

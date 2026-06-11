@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AddToCart from '../../components/AddToCart.jsx';
 import { fmtPrice } from '../../lib/format.js';
+import { tileClass } from '../../lib/tile.js';
 
 export async function getStaticPaths() {
   const spirits = await getCollection('spirits');
@@ -21,7 +22,7 @@ const jsonLd = {
   '@type': 'Product',
   name: d.title,
   description: paras[0],
-  image: new URL(d.images[0] ?? '/images/og-default.svg', Astro.site).toString(),
+  image: new URL(d.images[0] ?? '/images/og-default.png', Astro.site).toString(),
   brand: { '@type': 'Brand', name: d.range === 'klahn' ? 'Klahn Estate' : 'Black Squid Distillery' },
   offers: {
     '@type': 'Offer',
@@ -40,7 +41,7 @@ const jsonLd = {
 
     <div class="twocol" style="align-items: start;">
       <div class="gallery">
-        <div class="main-img">
+        <div class={tileClass('main-img', d.images[0])}>
           <img src={d.images[0]} alt={`${d.title} bottle`} width="600" height="800" />
         </div>
       </div>
@@ -74,7 +75,7 @@ const jsonLd = {
       <div class="grid-3">
         {others.map((s) => (
           <article class="pcard">
-            <a href={`/gins/${s.id}`} class="pimg">
+            <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
               <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
             </a>
             <h3 style="font-size: 1.1rem;"><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
@@ -98,6 +99,7 @@ const jsonLd = {
     border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
     background: radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));
   }
+  .gallery .main-img.plinth { background: #fff; }
   .gallery img { width: 100%; height: auto; object-fit: contain; }
   .pdetail h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); margin: 10px 0 8px; }
   .pmeta-line { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }

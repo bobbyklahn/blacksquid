@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import StillMark from '../components/StillMark.astro';
 
 const stills = [
   {
@@ -8,7 +9,7 @@ const stills = [
     build: 'Trial still',
     temperament: 'The test pilot',
     note: 'Every new recipe starts inside Tinny. Fifty litres of pure experimentation \u2014 trial batches, wild botanicals, the ideas that become next year\u2019s releases.',
-    photo: '/images/distillery/still-house.webp',
+    variant: 'tinny',
   },
   {
     name: 'Lucy',
@@ -16,7 +17,7 @@ const stills = [
     build: 'Copper pot still',
     temperament: 'The hard-working beauty',
     note: 'Lucy carries the everyday weight of the distillery — batch after batch, gin after gin, without complaint. Most of what you pour started inside her.',
-    photo: '/images/distillery/lucy.webp',
+    variant: 'lucy',
   },
   {
     name: 'Katrina',
@@ -24,7 +25,7 @@ const stills = [
     build: 'Full copper still',
     temperament: 'The purist',
     note: 'Katrina is full copper, top to bottom — the still we turn to when a spirit needs the softest, cleanest conversation with the metal.',
-    photo: '/images/distillery/katrina.webp',
+    variant: 'katrina',
   },
   {
     name: 'Bertha',
@@ -32,13 +33,13 @@ const stills = [
     build: 'Copper still',
     temperament: 'The new arrival. She is big.',
     note: 'Bertha has just arrived, and she is exactly as advertised. Three thousand litres of ambition — the future of Black Squid runs through her.',
-    photo: '/images/distillery/bertha.webp',
+    variant: 'bertha',
   },
 ];
 ---
 <BaseLayout
   title="The Distillery & The Stills — Black Squid Distillery, Barossa Valley"
-  description="Black Squid Distillery sits in the heart of the Barossa Valley among the world's famous wineries. Meet Lucy, Katrina and Bertha — our three copper stills."
+  description="Black Squid Distillery sits in the heart of the Barossa Valley among the world's famous wineries. Meet Tinny, Lucy, Katrina and Bertha — our four stills."
 >
   <header class="page-head">
     <div class="wrap">
@@ -66,10 +67,10 @@ const stills = [
         Every still has a personality. Ours have names — and opinions.
       </p>
       <div class="stills-grid">
-        {stills.map((s, i) => (
+        {stills.map((s) => (
           <article class="still-card reveal">
             <div class="still-photo">
-              <img src={s.photo} alt={`${s.name} — ${s.size} ${s.build} at Black Squid Distillery`} loading="lazy" width="400" height="300" />
+              <StillMark variant={s.variant} />
             </div>
             <p class="eyebrow brass">{s.size} · {s.build}</p>
             <h3>{s.name}</h3>
@@ -99,16 +100,36 @@ const stills = [
         </p>
         <p style="margin-top: 28px;"><a class="btn ghost" href="/gins">Taste the result</a> <a class="btn ghost" href="/contract-distilling" style="margin-left: 10px;">Distil with us</a></p>
       </div>
-      <div class="estate-photo reveal">
-        <img src="/images/distillery/building-front.webp" alt="The Black Squid Distillery building, Barossa Valley" loading="lazy" width="800" height="600" />
+      <div class="estate-photo reveal" role="img" aria-label="Sketch of the Klahn Estate — vine rows in the Barossa Valley, with a squid hiding in the contour lines">
+        <svg viewBox="0 0 800 600" fill="none" aria-hidden="true">
+          <!-- valley contours, drawn like an ocean chart -->
+          <g stroke="rgba(194, 168, 120, 0.34)" stroke-width="1.4">
+            <path d="M-10 150 Q160 92 330 128 Q540 172 810 96" />
+            <path d="M-10 235 Q190 168 380 206 Q590 248 810 178" opacity="0.85" />
+            <path d="M-10 322 Q200 252 410 290 Q620 326 810 266" opacity="0.7" />
+            <path d="M-10 412 Q210 344 440 378 Q650 408 810 356" opacity="0.55" />
+            <path d="M-10 500 Q230 440 470 468 Q670 490 810 448" opacity="0.4" />
+          </g>
+          <!-- vine rows on the lower slope -->
+          <g stroke="rgba(194, 168, 120, 0.5)" stroke-width="2" stroke-linecap="round">
+            <path d="M120 533 l0 -14 M180 528 l0 -16 M240 524 l0 -17 M300 521 l0 -18 M360 519 l0 -18 M420 518 l0 -18 M480 518 l0 -17 M540 520 l0 -16 M600 523 l0 -15 M660 527 l0 -14" />
+            <path d="M150 575 l0 -15 M215 571 l0 -17 M280 568 l0 -18 M345 566 l0 -19 M410 565 l0 -19 M475 565 l0 -18 M540 567 l0 -17 M605 570 l0 -16 M670 574 l0 -14" opacity="0.7" />
+          </g>
+          <!-- the one creature you'd never expect to find this far from the sea -->
+          <g transform="translate(560 196) scale(1.9)" stroke="#5d7cf0" opacity="0.62">
+            <circle cx="24" cy="24" r="21" stroke-width="1.6" />
+            <path d="M14 27c0-6 4.5-10.5 10-10.5S34 21 34 27c0 2.4-1 4-2.6 4-1.4 0-2.2-1-2.2-2.6 0-2.8-2-4.9-5.2-4.9s-5.2 2.1-5.2 4.9c0 1.6-.8 2.6-2.2 2.6C15 31 14 29.4 14 27Z" fill="#5d7cf0" stroke="none" opacity="0.8" />
+            <path d="M19 31.5c.2 2-.6 3.8-2.4 5M24 32.5v5.2M29 31.5c-.2 2 .6 3.8 2.4 5" stroke-width="1.4" stroke-linecap="round" />
+          </g>
+          <text x="62" y="86" fill="rgba(141, 150, 163, 0.75)" font-size="13" letter-spacing="4.5" font-family="ui-monospace, monospace">KLAHN ESTATE · VINE VALE · SA 5352</text>
+          <text x="62" y="110" fill="rgba(141, 150, 163, 0.45)" font-size="11" letter-spacing="3" font-family="ui-monospace, monospace">SHIRAZ — BLOCK A · RAINWATER · 4 STILLS</text>
+        </svg>
       </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(40px, 6vh, 70px); }
-  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0 18px; }
   .lede-sub { max-width: 62ch; font-size: 1.02rem; }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 54px; border-top: 1px solid var(--line); padding-top: 34px; }
   @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
@@ -121,13 +142,17 @@ const stills = [
   .still-card { border: 1px solid var(--line); background: var(--ink-2); padding: 26px 28px 30px; border-radius: 3px; }
   .still-photo {
     aspect-ratio: 4 / 3; border-radius: 2px; overflow: hidden; margin-bottom: 22px;
-    border: 1px solid var(--line); background: var(--ink-3);
+    border: 1px solid var(--line);
+    background: radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink-2));
   }
-  .still-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
-  .still-card:hover .still-photo img { transform: scale(1.04); }
+  .still-photo :global(.still-mark) { transition: transform 0.6s var(--ease); }
+  .still-card:hover .still-photo :global(.still-mark) { transform: scale(1.05); }
   .still-card h3 { font-size: 2rem; margin: 8px 0 4px; }
   .temper { font-style: italic; color: var(--paper); font-family: var(--serif); font-size: 1.05rem; margin-bottom: 12px; }
   .snote { font-size: 0.9rem; }
-  .estate-photo { border: 1px solid var(--line); border-radius: 3px; overflow: hidden; }
-  .estate-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .estate-photo {
+    border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
+    aspect-ratio: 4 / 3; background: var(--ink-2);
+  }
+  .estate-photo svg { width: 100%; height: 100%; display: block; }
 </style>

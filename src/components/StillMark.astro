@@ -1,0 +1,81 @@
+---
+/**
+ * Brass line-art portraits of the four stills — Tinny, Lucy, Katrina, Bertha.
+ * Stands in for photography until the real shots exist; drawn to match the
+ * still-dot marks on the homepage (dark copper fill, brass rim).
+ */
+interface Props {
+  variant: 'tinny' | 'lucy' | 'katrina' | 'bertha';
+  class?: string;
+}
+const { variant, class: cls } = Astro.props;
+const id = `sm-${variant}`;
+const brass = 'rgba(194, 168, 120, 0.55)';
+const brassFaint = 'rgba(194, 168, 120, 0.3)';
+const brassBright = 'rgba(194, 168, 120, 0.9)';
+---
+<svg class:list={['still-mark', cls]} viewBox="0 0 240 180" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id={`${id}-cu`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2017" />
+      <stop offset="1" stop-color="#14100b" />
+    </linearGradient>
+    <radialGradient id={`${id}-glow`} cx="0.5" cy="0.78" r="0.65">
+      <stop offset="0" stop-color="rgba(194, 168, 120, 0.13)" />
+      <stop offset="1" stop-color="rgba(194, 168, 120, 0)" />
+    </radialGradient>
+  </defs>
+
+  <rect width="240" height="180" fill={`url(#${id}-glow)`} />
+
+  {variant === 'tinny' && (
+    <g stroke-width="1.6">
+      <path d="M88 160 L88 138 Q88 114 120 114 Q152 114 152 138 L152 160 Z" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M92 136 Q120 127 148 136" stroke={brassFaint} />
+      <path d="M120 114 L120 96 L170 96" stroke={brassBright} stroke-width="2" stroke-linecap="round" />
+      <rect x="162" y="96" width="20" height="54" rx="4" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M172 150 L172 160" stroke={brassFaint} />
+      <path d="M88 126 Q70 126 70 137 Q70 147 88 145" stroke={brassFaint} />
+      <path d="M96 122 Q104 117 114 116" stroke={brassBright} opacity="0.55" stroke-width="1" />
+    </g>
+  )}
+
+  {variant === 'lucy' && (
+    <g stroke-width="1.6">
+      <path d="M66 160 L66 128 Q66 86 108 82 Q150 86 150 128 L150 160 Z" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M74 118 Q76 94 104 88" stroke={brassBright} opacity="0.5" stroke-width="1" />
+      <path d="M108 82 Q108 50 134 46 Q168 42 181 72" stroke={brassBright} stroke-width="2" stroke-linecap="round" />
+      <rect x="172" y="72" width="20" height="88" rx="4" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M172 92 h20 M172 108 h20 M172 124 h20 M172 140 h20" stroke={brassFaint} />
+    </g>
+  )}
+
+  {variant === 'katrina' && (
+    <g stroke-width="1.6">
+      <path d="M76 160 L76 134 Q76 108 116 108 Q156 108 156 134 L156 160 Z" fill={`url(#${id}-cu)`} stroke={brass} />
+      <rect x="104" y="38" width="26" height="70" rx="6" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M104 54 h26 M104 68 h26 M104 82 h26 M104 96 h26" stroke={brassFaint} />
+      <ellipse cx="117" cy="38" rx="13" ry="6" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M130 48 Q160 48 166 66" stroke={brassBright} stroke-width="1.8" stroke-linecap="round" />
+      <path d="M166 66 L166 160" stroke={brassFaint} />
+      <path d="M84 126 Q88 112 106 110" stroke={brassBright} opacity="0.5" stroke-width="1" />
+    </g>
+  )}
+
+  {variant === 'bertha' && (
+    <g stroke-width="1.6">
+      <path d="M30 160 L30 120 Q30 60 120 60 Q210 60 210 120 L210 160 Z" fill={`url(#${id}-cu)`} stroke={brass} />
+      <path d="M36 124 Q120 108 204 124" stroke={brassFaint} />
+      <circle cx="120" cy="138" r="12" stroke={brassFaint} />
+      <circle cx="120" cy="138" r="7" stroke={brassFaint} opacity="0.6" />
+      <path d="M120 60 L120 42 L158 42" stroke={brassBright} stroke-width="2" stroke-linecap="round" />
+      <path d="M46 100 Q62 72 98 64" stroke={brassBright} opacity="0.5" stroke-width="1" />
+    </g>
+  )}
+
+  <line x1="20" y1="160.5" x2="220" y2="160.5" stroke="rgba(141, 150, 163, 0.28)" />
+</svg>
+
+<style>
+  .still-mark { display: block; width: 100%; height: 100%; }
+</style>

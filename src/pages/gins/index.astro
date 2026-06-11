@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AddToCart from '../../components/AddToCart.jsx';
 import { fmtPrice } from '../../lib/format.js';
+import { tileClass } from '../../lib/tile.js';
 
 const spirits = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
 const klahn = spirits.filter((s) => s.data.range === 'klahn');
@@ -34,7 +35,7 @@ const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
       <div class="grid-3">
         {blackSquid.map((s) => (
           <article class="pcard reveal">
-            <a href={`/gins/${s.id}`} class="pimg">
+            <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
               <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
             </a>
             <p class="pmeta"><span class="range-b">Black Squid</span> · {s.data.style} · {s.data.abv}</p>
@@ -59,7 +60,7 @@ const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
       <div class="grid-3">
         {klahn.map((s) => (
           <article class="pcard reveal">
-            <a href={`/gins/${s.id}`} class="pimg">
+            <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
               <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
             </a>
             <p class="pmeta"><span class="range-k">Klahn</span> · {s.data.style} · {s.data.abv}</p>
@@ -85,8 +86,6 @@ const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
 </BaseLayout>
 
 <style>
-  .page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(30px, 5vh, 60px); }
-  .page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0 16px; }
   .range-jump { display: flex; gap: 22px; margin-top: 26px; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; }
   .range-jump a { border-bottom: 1px solid var(--line-strong); padding-bottom: 4px; transition: color 0.3s, border-color 0.3s; }
   .range-jump a:hover { color: var(--squid); border-color: var(--squid); }

@@ -15,7 +15,7 @@ const {
   title,
   description = 'Black Squid Distillery — small-batch gin distilled in the heart of the Barossa Valley, South Australia. Witchcraft with pure science.',
   noCart = false,
-  ogImage = '/images/og-default.svg',
+  ogImage = '/images/og-default.png',
   jsonLd,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -39,7 +39,7 @@ const year = new Date().getFullYear();
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,480;9..144,560&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,480;9..144,560&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body>
