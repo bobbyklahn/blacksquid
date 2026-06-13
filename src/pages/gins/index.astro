@@ -5,7 +5,9 @@ import AddToCart from '../../components/AddToCart.jsx';
 import { fmtPrice } from '../../lib/format.js';
 import { tileClass } from '../../lib/tile.js';
 
-const spirits = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
+const spirits = (await getCollection('spirits'))
+  .filter((s) => !s.data.hidden)
+  .sort((a, b) => a.data.order - b.data.order);
 const klahn = spirits.filter((s) => s.data.range === 'klahn');
 const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
 ---

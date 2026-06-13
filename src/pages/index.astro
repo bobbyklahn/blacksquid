@@ -6,7 +6,7 @@ import { fmtPrice } from '../lib/format.js';
 import { tileClass } from '../lib/tile.js';
 
 const spirits = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
-const featured = spirits.filter((s) => s.data.featured).slice(0, 3);
+const featured = spirits.filter((s) => s.data.featured && !s.data.hidden).slice(0, 3);
 
 const jsonLd = {
   '@context': 'https://schema.org',

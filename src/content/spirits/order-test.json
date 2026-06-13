@@ -1,0 +1,13 @@
+{
+  "title": "Order Test — staff only",
+  "range": "black-squid",
+  "style": "Not a gin",
+  "price": 1,
+  "abv": "0%",
+  "soldOut": false,
+  "featured": false,
+  "hidden": true,
+  "order": 999,
+  "description": "A A$1 staff product for testing live checkout and order emails. If you stumbled onto this page: it's not a real gin, and we'll refund you if you buy it. Delete this product after testing (it lives at src/content/spirits/order-test.json).",
+  "images": []
+}

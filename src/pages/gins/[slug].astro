@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { spirit } = Astro.props;
 const d = spirit.data;
 const all = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
-const others = all.filter((s) => s.id !== spirit.id).slice(0, 3);
+const others = all.filter((s) => s.id !== spirit.id && !s.data.hidden).slice(0, 3);
 const paras = d.description.split('\n').filter(Boolean);
 const effective = d.salePrice ?? d.price;
 

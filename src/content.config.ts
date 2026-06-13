@@ -13,6 +13,7 @@ const spirits = defineCollection({
     volume: z.string().optional(),
     soldOut: z.boolean().default(false),
     featured: z.boolean().default(false),
+    hidden: z.boolean().default(false), // buyable via direct URL, but never listed
     order: z.number().default(99),
     description: z.string(),
     serve: z.string().optional(),

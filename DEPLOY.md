@@ -68,6 +68,48 @@ Checkout asks for an optional gift message; it arrives with the order in your St
 
 Stripe can email people who started checkout but didn't pay: Dashboard → Settings → **Checkout → Recovery emails** (toggle on).
 
+## 4½. Order notifications & order management
+
+### You get an order email (the packing slip)
+
+`functions/api/stripe-webhook.js` listens for completed checkouts and emails you everything needed to pack the order: items, delivery address, phone, shipping option (pickup orders are flagged **[PICKUP]** in the subject), gift message, 18+ confirmation, and a direct link to the payment in Stripe. **Reply** to the email and it goes straight to the customer. One-time setup:
+
+1. **Resend account** (free, 100 emails/day — plenty): [resend.com](https://resend.com) → create an API key.
+   - Out of the box it sends from `onboarding@resend.dev`, which only delivers **to the email you signed up to Resend with** — fine to start.
+   - To send from `orders@blacksquiddistillery.com.au` (and deliver anywhere): Resend → Domains → add the domain → add the DNS records it shows (takes ~5 min once DNS is on Cloudflare), then set `ORDER_EMAIL_FROM`.
+2. **Stripe webhook**: Dashboard → **Developers → Webhooks → Add endpoint**.
+   - URL: `https://blacksquid.pages.dev/api/stripe-webhook` (update to the custom domain after go-live)
+   - Events: `checkout.session.completed` and `checkout.session.async_payment_succeeded`
+   - Copy the **signing secret** (`whsec_…`).
+   - Test mode and live mode have separate webhooks/secrets — set up test first, repeat for live when you flip the key.
+3. **Pages env vars** (Settings → Variables and Secrets):
+
+   | Variable | Value |
+   |---|---|
+   | `STRIPE_WEBHOOK_SECRET` | the `whsec_…` from step 2 (secret) |
+   | `RESEND_API_KEY` | from step 1 (secret) |
+   | `ORDER_EMAIL_TO` | where order emails go, e.g. `bocaca@gmail.com` |
+   | `ORDER_EMAIL_FROM` | *(optional)* `Black Squid Orders <orders@blacksquiddistillery.com.au>` once the domain is verified |
+
+   Then redeploy (Deployments → ⋯ → Retry) so the function picks them up.
+4. **Test it**: buy something with `4242 4242 4242 4242` — the email arrives with a `[TEST]` subject. Dashboard → Webhooks shows every delivery and any failures (failed sends are retried automatically).
+
+Want a phone buzz too? Install the **Stripe mobile app** — push notification on every payment, refunds from your pocket.
+
+### The customer gets a receipt
+
+Stripe sends these — no code: Dashboard → **Settings → Emails** → turn on **Successful payments** (and **Refunds**). Live mode only; test mode never sends customer receipts.
+
+### Managing orders
+
+For this volume the **Stripe Dashboard → Payments** list *is* the order book — each payment shows items, address, phone, gift message; search by name/email; refund from the same screen (customer is auto-emailed if receipt emails are on). Day-to-day flow:
+
+1. Order email arrives → pack from it (it has everything, including the gift note).
+2. Ship it, then reply to the order email with the tracking number — it goes to the customer.
+3. Refunds/disputes → the Stripe link in the email.
+
+If volume grows enough that you need fulfilment statuses (open/packed/shipped) across many orders a day, the next step is storing orders in a small database with an orders board — easy to bolt on later since the webhook already receives every order.
+
 ## 5. The admin backend (`/admin`)
 
 The CMS is Sveltia (Decap-compatible). It edits the GitHub repo directly; every save = commit = automatic redeploy (~1 min). One-time setup:
@@ -95,7 +137,8 @@ Product images are currently elegant placeholders. Replace them:
 - [ ] Stills blurbs on `/distillery` are lightly expanded from your originals — verify Tinny/Lucy/Katrina/Bertha details. Tinny currently uses the still-house interior photo; swap in her own shot when you have one.
 - [ ] `/contract-distilling` reuses your old copy plus elaboration (the 4-step process, SPAK bottling tie-in) — read it once before launch.
 - [ ] Instagram/Facebook URLs in the footer are guesses — point them at your real profiles.
-- [ ] Test checkout in Stripe **test mode** end to end.
+- [x] Test checkout in Stripe **test mode** end to end (worked with shipping ✓).
+- [ ] Set up order emails + webhook (§ 4½) and turn on customer receipt emails — remember to recreate the webhook with the **live** signing secret when you swap to the live key.
 - [ ] Old URLs (`/shop`, `/shop/p/...`, `/thestills`) 301-redirect already (`public/_redirects`) — spot-check after launch.
 - [ ] Then cancel Squarespace 🎉 (you were paying ~A$26–46/mo; this stack is ~A$0/mo + Stripe's per-sale fee).
 
@@ -109,5 +152,6 @@ src/pages/             ← all pages; index.astro is the homepage
 src/components/        ← cart, age gate, quote basket (React)
 src/scripts/ink-hero.js← the colour-changing WebGL hero
 functions/api/checkout.js ← Stripe serverless function
+functions/api/stripe-webhook.js ← order notification emails
 public/admin/          ← the CMS
 ```
