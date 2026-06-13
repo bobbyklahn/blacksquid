@@ -13,11 +13,15 @@ export default function CartWidget() {
   const hasUnavailable = items.some((i) => i.unavailable);
   const total = available.reduce((n, i) => n + i.qty * i.price, 0);
 
-  // "Complete the set" — up to 2 products not yet in the cart (prices.json is pre-sorted)
-  const inCart = new Set(items.map((i) => i.slug));
+  // "Complete the set" — up to 2 products not yet in the cart (prices.json is pre-sorted).
+  // Also hide bottles already inside a bundle in the cart, so we never upsell the box's own contents.
+  const excluded = new Set(items.map((i) => i.slug));
+  for (const i of items) {
+    (catalog?.[i.slug]?.components ?? []).forEach((c) => excluded.add(c));
+  }
   const suggestions = catalog
     ? Object.entries(catalog)
-        .filter(([slug, p]) => !inCart.has(slug) && !p.soldOut)
+        .filter(([slug, p]) => !excluded.has(slug) && !p.soldOut)
         .slice(0, 2)
     : [];
 

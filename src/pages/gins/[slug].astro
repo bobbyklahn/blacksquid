@@ -17,6 +17,22 @@ const others = all.filter((s) => s.id !== spirit.id && !s.data.hidden).slice(0, 
 const paras = d.description.split('\n').filter(Boolean);
 const effective = d.salePrice ?? d.price;
 
+// Bundle: resolve the component spirits and compute the savings live, so the
+// "buy separately vs bundle" story can never drift from the real bottle prices.
+const components = (d.components ?? [])
+  .map((slug) => all.find((s) => s.id === slug))
+  .filter(Boolean);
+const isBundle = components.length > 0;
+const effOf = (s) => s.data.salePrice ?? s.data.price;
+const partsTotal = components.reduce((n, c) => n + effOf(c), 0);
+const bundleSaving = partsTotal - effective;
+// Only show the "buy separately" comparison when every bottle is actually
+// buyable on its own — otherwise we'd advertise a saving against a sold-out item.
+const allInStock = components.every((c) => !c.data.soldOut);
+const metaBits = isBundle
+  ? [d.style, d.volume]
+  : [d.style, d.abv && `${d.abv} ABV`, d.volume];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -51,8 +67,38 @@ const jsonLd = {
           {d.range === 'klahn' ? 'Klahn Estate range' : 'Black Squid range'}
         </p>
         <h1>{d.title}</h1>
-        <p class="pmeta-line muted">{d.style} · {d.abv} ABV · {d.volume}</p>
+        <p class="pmeta-line muted">{metaBits.filter(Boolean).join(' · ')}</p>
         <p class="price big" set:html={fmtPrice(d.price, d.salePrice)} />
+
+        {isBundle && (
+          <div class="box">
+            <p class="box-head">Inside the box · {components.length} bottles</p>
+            <ul class="box-list">
+              {components.map((c) => (
+                <li>
+                  <a href={`/gins/${c.id}`} class={`box-item${c.data.soldOut ? ' na' : ''}`}>
+                    <img src={c.data.images[0]} alt="" width="40" height="54" loading="lazy" />
+                    <span class="box-name">{c.data.title}</span>
+                    {c.data.soldOut
+                      ? <span class="box-price box-na">Currently unavailable</span>
+                      : <span class="box-price" set:html={fmtPrice(c.data.price, c.data.salePrice)} />}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            {allInStock ? (
+              <div class="box-sum">
+                <div><span>Bought separately</span><span set:html={fmtPrice(partsTotal)} /></div>
+                <div><span>Bundle price</span><span set:html={fmtPrice(effective)} /></div>
+                {bundleSaving > 0 && (
+                  <div class="box-save"><span>You save</span><span set:html={fmtPrice(bundleSaving)} /></div>
+                )}
+              </div>
+            ) : (
+              <p class="box-note">All three bottles ship in the box. The per-bottle comparison is hidden while one isn't sold on its own.</p>
+            )}
+          </div>
+        )}
 
         {paras.map((p) => <p class="body muted">{p}</p>)}
 
@@ -104,6 +150,21 @@ const jsonLd = {
   .pdetail h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); margin: 10px 0 8px; }
   .pmeta-line { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }
   .price.big { font-size: 1.9rem; margin-bottom: 26px; display: block; }
+  .box { margin: -6px 0 26px; border: 1px solid var(--line); border-radius: 4px; padding: 16px 18px; background: var(--ink-2); }
+  .box-head { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--squid); margin-bottom: 12px; }
+  .box-list { list-style: none; margin: 0 0 14px; padding: 0; }
+  .box-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .box-item:hover .box-name { color: var(--squid); }
+  .box-item.na { opacity: 0.55; }
+  .box-item img { width: 40px; height: 54px; object-fit: contain; flex-shrink: 0; }
+  .box-name { flex: 1; font-size: 0.9rem; transition: color 0.25s; }
+  .box-price { font-size: 0.84rem; color: var(--muted); }
+  .box-price .was { text-decoration: line-through; opacity: 0.6; margin-left: 6px; }
+  .box-na { font-style: italic; }
+  .box-note { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin: 2px 0 0; }
+  .box-sum > div { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.9rem; color: var(--muted); }
+  .box-save { color: var(--paper); font-weight: 600; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 9px; }
+  .box-save span:last-child { color: var(--squid); }
   .serve { margin-top: 22px; padding: 16px 18px; border-left: 2px solid var(--squid); background: var(--ink-2); font-size: 0.92rem; color: var(--muted); }
   .serve strong { color: var(--paper); font-weight: 500; }
   .buy-row { margin-top: 30px; }

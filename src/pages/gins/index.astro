@@ -40,7 +40,7 @@ const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
             <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
               <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
             </a>
-            <p class="pmeta"><span class="range-b">Black Squid</span> · {s.data.style} · {s.data.abv}</p>
+            <p class="pmeta"><span class="range-b">Black Squid</span> · {s.data.style}{s.data.abv ? ` · ${s.data.abv}` : ''}</p>
             <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
             <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
             <div class="prow">
@@ -65,7 +65,7 @@ const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
             <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
               <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
             </a>
-            <p class="pmeta"><span class="range-k">Klahn</span> · {s.data.style} · {s.data.abv}</p>
+            <p class="pmeta"><span class="range-k">Klahn</span> · {s.data.style}{s.data.abv ? ` · ${s.data.abv}` : ''}</p>
             <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
             <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
             <div class="prow">

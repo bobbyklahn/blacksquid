@@ -1,15 +1,19 @@
 {
   "title": "The Klahn Trio — Gift Bundle",
   "range": "klahn",
-  "style": "3-Bottle Bundle",
+  "style": "Gift Bundle",
   "price": 255,
   "salePrice": 230,
-  "abv": "40%",
   "volume": "3 × 700ml",
   "soldOut": false,
   "featured": true,
+  "components": [
+    "klahn-blue-bvjalie-gin-700ml",
+    "klahn-shiraz-gin-700ml",
+    "klahn-london-dry-gin"
+  ],
   "order": 3,
-  "description": "One of each character: the colour-changing Blue Bvjalie, the estate Shiraz Gin, and the classic London Dry — the full Klahn story in three bottles.\n\nSave $25 against buying them one by one. Boxed together; add a gift message at checkout and we'll include it with the order.",
+  "description": "One of each character: the colour-changing Blue Bvjalie, the estate Shiraz Gin, and the classic London Dry — the full Klahn story in three bottles.\n\nBoxed together — add a gift message at checkout and we'll include it with the order.",
   "serve": "One for the show, one for the table, one for the shelf.",
   "images": ["/images/products/klahn-trio.svg"]
 }

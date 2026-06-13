@@ -6,9 +6,9 @@
 
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/blacksquid-site # ← TODO
+  repo: bobbyklahn/blacksquid
   branch: main
-  base_url: https://YOUR-AUTH-WORKER.workers.dev # ← TODO
+  base_url: https://YOUR-AUTH-WORKER.workers.dev # ← TODO: your deployed sveltia-cms-auth worker URL (DEPLOY.md step 5)
 
 site_url: https://www.blacksquiddistillery.com.au
 media_folder: public/images/uploads
@@ -41,6 +41,16 @@ collections:
       - { name: soldOut, label: 'Sold out', widget: boolean, default: false }
       - { name: featured, label: 'Feature on homepage', widget: boolean, default: false }
       - { name: order, label: 'Sort order (low = first)', widget: number, value_type: int, default: 50 }
+      - name: components
+        label: 'Bundle contents (optional)'
+        widget: relation
+        collection: spirits
+        search_fields: [title]
+        value_field: '{{slug}}'
+        display_fields: [title]
+        multiple: true
+        required: false
+        hint: "Pick the bottles inside to make this a gift bundle — the page auto-shows what's inside and the saving vs buying separately. Leave empty for a normal product. Set this product's own Price/Sale price to what the bundle should charge."
       - { name: description, label: Description, widget: text, hint: 'Blank line between paragraphs.' }
       - { name: serve, label: 'Serve suggestion', widget: string, required: false }
       - name: images

@@ -14,6 +14,7 @@ const spirits = defineCollection({
     soldOut: z.boolean().default(false),
     featured: z.boolean().default(false),
     hidden: z.boolean().default(false), // buyable via direct URL, but never listed
+    components: z.array(z.string()).default([]), // bundle: slugs of included spirits (empty = normal product)
     order: z.number().default(99),
     description: z.string(),
     serve: z.string().optional(),
