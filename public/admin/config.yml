@@ -8,7 +8,7 @@ backend:
   name: github
   repo: bobbyklahn/blacksquid
   branch: main
-  base_url: https://YOUR-AUTH-WORKER.workers.dev # ← TODO: your deployed sveltia-cms-auth worker URL (DEPLOY.md step 5)
+  base_url: https://sveltia-cms-auth.bobbyleo.workers.dev
 
 site_url: https://www.blacksquiddistillery.com.au
 media_folder: public/images/uploads
