@@ -28,11 +28,13 @@ collections:
     fields:
       - { name: title, label: Name, widget: string, hint: 'e.g. Klahn Shiraz Gin' }
       - name: range
-        label: Range
-        widget: select
-        options:
-          - { label: 'Klahn Estate', value: klahn }
-          - { label: 'Black Squid', value: black-squid }
+        label: 'Product line'
+        widget: relation
+        collection: ranges
+        search_fields: [title]
+        value_field: '{{slug}}'
+        display_fields: [title]
+        hint: 'Which line this gin belongs to. Add or rename lines under "Product Lines".'
       - { name: style, label: Style, widget: string, required: false, hint: 'e.g. Shiraz Gin, London Dry Gin' }
       - { name: price, label: 'Price (AUD)', widget: number, value_type: float, min: 0 }
       - { name: salePrice, label: 'Sale price (AUD, optional)', widget: number, value_type: float, required: false, hint: 'Leave empty for no sale. Checkout charges this when set.' }
@@ -58,6 +60,29 @@ collections:
         widget: list
         field: { name: image, label: Image, widget: image }
         hint: 'First photo is the main one. Uploads land in /images/uploads.'
+
+  - name: ranges
+    label: Product Lines
+    label_singular: Product line
+    folder: src/content/ranges
+    create: true
+    extension: json
+    format: json
+    slug: '{{slug}}'
+    identifier_field: title
+    summary: '{{title}}'
+    fields:
+      - { name: title, label: 'Line name (heading + brand)', widget: string, hint: 'e.g. Klahn Estate — the section heading and the brand shown on product pages.' }
+      - { name: name, label: 'Short badge label', widget: string, hint: 'e.g. Klahn — the small tag on product cards.' }
+      - { name: tagline, label: 'Section tagline (eyebrow)', widget: string, required: false, hint: 'e.g. The craft range' }
+      - name: accent
+        label: Accent colour
+        widget: select
+        default: squid
+        options:
+          - { label: 'Squid blue', value: squid }
+          - { label: 'Brass gold', value: brass }
+      - { name: order, label: 'Sort order (low = first)', widget: number, value_type: int, default: 50 }
 
   - name: bottles
     label: SPAK — Bottles & Closures

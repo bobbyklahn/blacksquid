@@ -7,6 +7,8 @@ import { tileClass } from '../lib/tile.js';
 
 const spirits = (await getCollection('spirits')).sort((a, b) => a.data.order - b.data.order);
 const featured = spirits.filter((s) => s.data.featured && !s.data.hidden).slice(0, 3);
+const ranges = await getCollection('ranges');
+const rangeOf = (slug) => ranges.find((r) => r.id === slug)?.data;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -110,8 +112,8 @@ const jsonLd = {
               <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
             </a>
             <p class="pmeta">
-              <span class={s.data.range === 'klahn' ? 'range-k' : 'range-b'}>
-                {s.data.range === 'klahn' ? 'Klahn' : 'Black Squid'}
+              <span class={rangeOf(s.data.range)?.accent === 'brass' ? 'range-k' : 'range-b'}>
+                {rangeOf(s.data.range)?.name ?? 'Gin'}
               </span>
               {' '}· {s.data.style} · {s.data.abv}
             </p>

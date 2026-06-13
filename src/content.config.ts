@@ -5,7 +5,7 @@ const spirits = defineCollection({
   loader: glob({ pattern: '**/*.json', base: './src/content/spirits' }),
   schema: z.object({
     title: z.string(),
-    range: z.enum(['klahn', 'black-squid']),
+    range: z.string(), // id of a ranges/<slug>.json (the product line)
     style: z.string().optional(),
     price: z.number(),
     salePrice: z.number().nullable().optional(),
@@ -45,4 +45,17 @@ const journal = defineCollection({
   }),
 });
 
-export const collections = { spirits, bottles, journal };
+// Product lines (ranges). Each file's id (filename) is what a spirit's
+// `range` points at. Drives the gins-page sections, badges and brand labels.
+const ranges = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/ranges' }),
+  schema: z.object({
+    title: z.string(), // section heading + brand, e.g. "Klahn Estate"
+    name: z.string(), // short badge label, e.g. "Klahn"
+    tagline: z.string().optional(), // section eyebrow, e.g. "The craft range"
+    accent: z.enum(['squid', 'brass']).default('squid'),
+    order: z.number().default(99),
+  }),
+});
+
+export const collections = { spirits, bottles, journal, ranges };

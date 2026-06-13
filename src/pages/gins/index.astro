@@ -8,8 +8,16 @@ import { tileClass } from '../../lib/tile.js';
 const spirits = (await getCollection('spirits'))
   .filter((s) => !s.data.hidden)
   .sort((a, b) => a.data.order - b.data.order);
-const klahn = spirits.filter((s) => s.data.range === 'klahn');
-const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
+const ranges = (await getCollection('ranges')).sort((a, b) => a.data.order - b.data.order);
+// one section per line, in order, skipping any line with no gins
+const lines = ranges
+  .map((r) => ({ id: r.id, ...r.data, items: spirits.filter((s) => s.data.range === r.id) }))
+  .filter((l) => l.items.length > 0);
+// safety net: a spirit whose line was deleted still appears, never silently vanishes
+const known = new Set(ranges.map((r) => r.id));
+const orphans = spirits.filter((s) => !known.has(s.data.range));
+if (orphans.length) lines.push({ id: '_more', title: 'More gins', name: 'Gin', tagline: '', accent: 'squid', items: orphans });
+const badgeClass = (accent) => (accent === 'brass' ? 'range-k' : 'range-b');
 ---
 <BaseLayout
   title="Our Gins — Black Squid Distillery, Barossa Valley"
@@ -24,59 +32,38 @@ const blackSquid = spirits.filter((s) => s.data.range === 'black-squid');
         Barossa Shiraz gin. Every bottle leaves the property the colour of intent.
       </p>
       <nav class="range-jump" aria-label="Jump to range">
-        <a href="#black-squid">Black Squid range</a>
-        <a href="#klahn">Klahn Estate range</a>
+        {lines.map((l) => <a href={`#${l.id}`}>{l.title} range</a>)}
       </nav>
     </div>
   </header>
 
-  <section id="black-squid" class="pad-s">
-    <div class="wrap">
-      <p class="eyebrow">The signature range</p>
-      <h2 class="section-h">Black Squid</h2>
-      <div class="grid-3">
-        {blackSquid.map((s) => (
-          <article class="pcard reveal">
-            <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
-              <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
-            </a>
-            <p class="pmeta"><span class="range-b">Black Squid</span> · {s.data.style}{s.data.abv ? ` · ${s.data.abv}` : ''}</p>
-            <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
-            <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
-            <div class="prow">
-              <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
-              <AddToCart client:visible slug={s.id} title={s.data.title} price={s.data.salePrice ?? s.data.price} soldOut={s.data.soldOut} />
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider-ink" />
-
-  <section id="klahn" class="pad-s">
-    <div class="wrap">
-      <p class="eyebrow brass">The craft range</p>
-      <h2 class="section-h">Klahn Estate</h2>
-      <div class="grid-3">
-        {klahn.map((s) => (
-          <article class="pcard reveal">
-            <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
-              <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
-            </a>
-            <p class="pmeta"><span class="range-k">Klahn</span> · {s.data.style}{s.data.abv ? ` · ${s.data.abv}` : ''}</p>
-            <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
-            <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
-            <div class="prow">
-              <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
-              <AddToCart client:visible slug={s.id} title={s.data.title} price={s.data.salePrice ?? s.data.price} soldOut={s.data.soldOut} />
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
+  {lines.map((l, i) => (
+    <Fragment>
+      {i > 0 && <hr class="divider-ink" />}
+      <section id={l.id} class="pad-s">
+        <div class="wrap">
+          {l.tagline && <p class={`eyebrow ${l.accent === 'brass' ? 'brass' : ''}`}>{l.tagline}</p>}
+          <h2 class="section-h">{l.title}</h2>
+          <div class="grid-3">
+            {l.items.map((s) => (
+              <article class="pcard reveal">
+                <a href={`/gins/${s.id}`} class={tileClass('pimg', s.data.images[0])}>
+                  <img src={s.data.images[0]} alt={s.data.title} loading="lazy" width="300" height="400" />
+                </a>
+                <p class="pmeta"><span class={badgeClass(l.accent)}>{l.name}</span> · {s.data.style}{s.data.abv ? ` · ${s.data.abv}` : ''}</p>
+                <h3><a href={`/gins/${s.id}`}>{s.data.title}</a></h3>
+                <p class="pnote">{s.data.description.split('\n')[0].slice(0, 110)}…</p>
+                <div class="prow">
+                  <span class="price" set:html={fmtPrice(s.data.price, s.data.salePrice)} />
+                  <AddToCart client:visible slug={s.id} title={s.data.title} price={s.data.salePrice ?? s.data.price} soldOut={s.data.soldOut} />
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Fragment>
+  ))}
 
   <section class="pad-s">
     <div class="wrap center">
