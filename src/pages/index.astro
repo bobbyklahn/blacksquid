@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AddToCart from '../components/AddToCart.jsx';
+import ColorChangeGlass from '../components/ColorChangeGlass.astro';
 import { fmtPrice } from '../lib/format.js';
 import { tileClass } from '../lib/tile.js';
 
@@ -62,10 +63,8 @@ const jsonLd = {
           <a class="btn ghost" href="/gins/klahn-blue-bvjalie-gin-700ml">Meet Blue Bvjalie</a>
         </p>
       </div>
-      <div class="reveal colorchange-demo" aria-hidden="true">
-        <div class="cc-glass cc-blue"></div>
-        <div class="cc-arrow">+ tonic →</div>
-        <div class="cc-glass cc-pink"></div>
+      <div class="reveal colorchange-demo">
+        <ColorChangeGlass />
       </div>
     </div>
   </section>
@@ -218,41 +217,7 @@ const jsonLd = {
     .scroll-hint::after { animation: none; }
   }
 
-  .colorchange-demo { display: flex; align-items: flex-end; justify-content: center; gap: 22px; padding-bottom: 18px; }
-  .cc-glass {
-    width: clamp(90px, 12vw, 150px); aspect-ratio: 3 / 4;
-    border-radius: 6px 6px 14px 14px;
-    border: 1px solid rgba(236, 237, 234, 0.22);
-    position: relative; overflow: hidden;
-    background: linear-gradient(105deg, rgba(236, 237, 234, 0.07) 0%, transparent 18%, transparent 78%, rgba(236, 237, 234, 0.1) 100%);
-  }
-  /* the liquid: body gradient + a lit meniscus at the surface */
-  .cc-glass::before {
-    content: ''; position: absolute; inset: 24% 7% 5% 7%;
-    border-radius: 3px 3px 11px 11px;
-  }
-  .cc-blue::before {
-    background:
-      radial-gradient(140% 30px at 50% 0%, rgba(236, 237, 234, 0.35), transparent 60%),
-      radial-gradient(90% 60% at 50% 110%, #1d2a6e, transparent),
-      linear-gradient(to bottom, #4a64cc, #2b3a8f);
-  }
-  .cc-pink::before {
-    background:
-      radial-gradient(140% 30px at 50% 0%, rgba(236, 237, 234, 0.4), transparent 60%),
-      radial-gradient(90% 60% at 50% 110%, #8a3f63, transparent),
-      linear-gradient(to bottom, #e08cb4, #b85c8a);
-  }
-  /* glass shine */
-  .cc-glass::after {
-    content: ''; position: absolute; top: 4%; bottom: 8%; left: 12%; width: 9%;
-    border-radius: 99px;
-    background: linear-gradient(to bottom, rgba(236, 237, 234, 0.34), rgba(236, 237, 234, 0.05) 70%, transparent);
-  }
-  /* glow pooling on the bar beneath each pour */
-  .cc-blue { box-shadow: 0 26px 48px -16px rgba(93, 124, 240, 0.45); }
-  .cc-pink { box-shadow: 0 26px 48px -16px rgba(224, 140, 180, 0.42); }
-  .cc-arrow { color: var(--muted); font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap; align-self: center; }
+  .colorchange-demo { display: flex; align-items: center; justify-content: center; padding: 10px 0; }
 
   .ranges { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 36px; }
   @media (max-width: 840px) { .ranges { grid-template-columns: 1fr; } }
