@@ -19,6 +19,12 @@
   --brass:  #c2a878;
   --line:   rgba(141, 150, 163, 0.18);
   --line-strong: rgba(141, 150, 163, 0.34);
+  /* light "trade" surface — Squid Supply Co. catalogue */
+  --trade-bg:    #f4f2ec;        /* warm paper ground */
+  --trade-card:  #ffffff;        /* card face */
+  --trade-ink:   #16191e;        /* near-black text on paper */
+  --trade-muted: #5e6672;        /* secondary on paper */
+  --trade-line:  #e2ded3;        /* warm hairline */
 
   --serif: 'Fraunces', Georgia, serif;
   --sans:  'Hanken Grotesk', system-ui, -apple-system, sans-serif;
@@ -205,3 +211,38 @@ label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; c
   background: linear-gradient(to right, transparent, var(--squid-deep), var(--blush), transparent);
   opacity: 0.45;
 }
+
+/* ============================================================
+   LIGHT THEME — trade pages (Squid Supply Co.)
+   The catalogue sits on a warm white sheet; the shared nav, forms
+   and outline buttons flip to ink-on-paper. The footer stays dark
+   so it still bookends the site.
+   ============================================================ */
+body.light { background: var(--trade-bg); color: var(--trade-ink); }
+body.light .muted { color: var(--trade-muted); }
+
+/* nav: white scrim + ink text, instead of the dark gradient */
+body.light .nav {
+  background: linear-gradient(to bottom, rgba(244, 242, 236, 0.96), rgba(244, 242, 236, 0));
+  color: var(--trade-ink);
+}
+body.light .nav-toggle { color: var(--trade-ink); }
+body.light .nav .brand .wordmark small { color: var(--trade-muted); }
+body.light .nav .links a:hover { color: var(--squid); }
+@media (max-width: 920px) {
+  body.light .nav .links { background: var(--trade-card); border-color: var(--trade-line); }
+}
+
+/* forms on paper */
+body.light input, body.light textarea, body.light select {
+  background: var(--trade-card); color: var(--trade-ink); border-color: var(--trade-line);
+}
+body.light label { color: var(--trade-muted); }
+
+/* outline button reads on white (default text was bone) */
+body.light .btn { color: var(--trade-ink); }
+body.light .btn:hover { color: #fff; }
+body.light .btn.solid { color: #fff; }
+
+/* footer keeps its dark identity even on a light page */
+body.light footer { color: var(--paper); }

@@ -3,7 +3,7 @@ import { useQuote, aud } from '../stores/cart.js';
 
 const EMAIL = 'admin@blacksquiddistillery.com.au';
 
-/** Wholesale quote basket panel for /spak — builds one enquiry email. */
+/** Wholesale quote basket panel for /supply (Squid Supply Co.) — builds one enquiry email. */
 export default function QuoteBasket() {
   const { items, setQty, remove, clear } = useQuote();
   const [form, setForm] = useState({ name: '', business: '', email: '', message: '' });
@@ -16,7 +16,7 @@ export default function QuoteBasket() {
     return [
       'Hello Black Squid,',
       '',
-      'I would like a wholesale quote for:',
+      'I would like a wholesale quote from Squid Supply Co. for:',
       '',
       ...lines,
       '',
@@ -31,7 +31,7 @@ export default function QuoteBasket() {
   };
 
   const send = () => {
-    const url = `mailto:${EMAIL}?subject=${encodeURIComponent('SPAK wholesale quote request')}&body=${encodeURIComponent(body())}`;
+    const url = `mailto:${EMAIL}?subject=${encodeURIComponent('Squid Supply Co. wholesale quote request')}&body=${encodeURIComponent(body())}`;
     window.location.href = url;
   };
 
@@ -40,8 +40,9 @@ export default function QuoteBasket() {
       <h3 style={st.h}>Request a quote</h3>
       {items.length === 0 ? (
         <p style={st.empty}>
-          No items yet. Set a quantity on any bottle or closure and hit{' '}
-          <em>Add to quote</em> — then send the lot as one enquiry.
+          No items yet. Set a quantity on any line —{' '}
+          <strong style={{ color: 'var(--trade-ink)', fontWeight: 500 }}>bottles ship by the pallet</strong>{' '}
+          — and hit <em>Add to quote</em>, then send the lot as one enquiry.
         </p>
       ) : (
         <>
@@ -53,8 +54,8 @@ export default function QuoteBasket() {
                   {i.price > 0 && <div style={st.p}>{i.priceFrom ? 'from ' : ''}{aud(i.price)} ea</div>}
                 </div>
                 <input
-                  type="number" min="1" value={i.qty}
-                  onChange={(e) => setQty(i.slug, parseInt(e.target.value) || 1)}
+                  type="number" min={i.perPallet || 1} step={i.perPallet || 50} value={i.qty}
+                  onChange={(e) => setQty(i.slug, parseInt(e.target.value) || 0)}
                   aria-label={`Quantity for ${i.title}`}
                   style={st.qty}
                 />
@@ -88,17 +89,18 @@ export default function QuoteBasket() {
 
 const st = {
   panel: {
-    position: 'sticky', top: 96, border: '1px solid rgba(141,150,163,0.25)',
-    background: '#0c1016', padding: '26px 24px', borderRadius: 3,
+    position: 'sticky', top: 96, border: '1px solid var(--trade-line)',
+    background: 'var(--trade-card)', padding: '24px 22px', borderRadius: 6,
+    boxShadow: '0 18px 40px -30px rgba(20, 23, 30, 0.5)',
   },
-  h: { fontFamily: "'Fraunces', Georgia, serif", fontWeight: 480, fontSize: '1.4rem', marginBottom: 12 },
-  empty: { color: '#8d96a3', fontSize: '0.88rem', lineHeight: 1.8 },
-  line: { display: 'flex', gap: 10, alignItems: 'center', padding: '10px 0', borderBottom: '1px solid rgba(141,150,163,0.12)' },
-  t: { fontSize: '0.82rem', lineHeight: 1.35 },
-  p: { color: '#8d96a3', fontSize: '0.72rem' },
-  qty: { width: 64, padding: '6px 8px', fontSize: '0.82rem' },
-  rm: { background: 'none', border: 'none', color: '#5d6573', fontSize: '0.8rem' },
-  lab: { fontSize: '0.66rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#8d96a3', display: 'block', margin: '14px 0 5px' },
-  clear: { width: '100%', marginTop: 8, padding: 6, background: 'none', border: 'none', color: '#5d6573', fontSize: '0.68rem', textDecoration: 'underline' },
-  fine: { color: '#5d6573', fontSize: '0.68rem', lineHeight: 1.7, marginTop: 16 },
+  h: { fontFamily: "'Fraunces', Georgia, serif", fontWeight: 480, fontSize: '1.35rem', marginBottom: 10, color: 'var(--trade-ink)' },
+  empty: { color: 'var(--trade-muted)', fontSize: '0.88rem', lineHeight: 1.8 },
+  line: { display: 'flex', gap: 10, alignItems: 'center', padding: '10px 0', borderBottom: '1px solid var(--trade-line)' },
+  t: { fontSize: '0.82rem', lineHeight: 1.35, color: 'var(--trade-ink)' },
+  p: { color: 'var(--trade-muted)', fontSize: '0.72rem' },
+  qty: { width: 64, padding: '6px 8px', fontSize: '0.82rem', textAlign: 'center' },
+  rm: { background: 'none', border: 'none', color: '#b1ab9c', fontSize: '0.8rem' },
+  lab: { fontSize: '0.64rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--trade-muted)', display: 'block', margin: '14px 0 5px' },
+  clear: { width: '100%', marginTop: 8, padding: 6, background: 'none', border: 'none', color: '#9b9484', fontSize: '0.68rem', textDecoration: 'underline' },
+  fine: { color: '#8b8576', fontSize: '0.68rem', lineHeight: 1.7, marginTop: 16 },
 };

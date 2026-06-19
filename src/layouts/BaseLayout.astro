@@ -8,6 +8,8 @@ interface Props {
   description?: string;
   /** hide the spirits cart on trade pages */
   noCart?: boolean;
+  /** 'light' renders the page on the white trade surface (Squid Supply Co.) */
+  theme?: 'dark' | 'light';
   ogImage?: string;
   jsonLd?: object;
 }
@@ -15,6 +17,7 @@ const {
   title,
   description = 'Black Squid Distillery — small-batch gin distilled in the heart of the Barossa Valley, South Australia. Witchcraft with pure science.',
   noCart = false,
+  theme = 'dark',
   ogImage = '/images/og-default.png',
   jsonLd,
 } = Astro.props;
@@ -42,7 +45,7 @@ const year = new Date().getFullYear();
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,480;9..144,560&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
-<body>
+<body class={theme === 'light' ? 'light' : undefined}>
   <AgeGate client:load />
 
   <nav class="nav" aria-label="Main">
@@ -96,7 +99,7 @@ const year = new Date().getFullYear();
           <h4>Trade</h4>
           <p class="fcol">
             <a href="/contract-distilling">Custom &amp; contract distilling</a><br />
-            <a href="/spak">SPAK — bottles &amp; closures</a><br />
+            <a href="/supply">Squid Supply Co. — bottles &amp; closures</a><br />
             <a href="mailto:admin@blacksquiddistillery.com.au">Wholesale enquiries</a>
           </p>
         </div>

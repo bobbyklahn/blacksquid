@@ -44,7 +44,7 @@ export const useCart = create(
   )
 );
 
-/* ---------- SPAK wholesale quote basket (enquiry email) ---------- */
+/* ---------- Squid Supply Co. wholesale quote basket (enquiry email) ---------- */
 export const useQuote = create(
   persist(
     (set, get) => ({

@@ -85,7 +85,7 @@ collections:
       - { name: order, label: 'Sort order (low = first)', widget: number, value_type: int, default: 50 }
 
   - name: bottles
-    label: SPAK — Bottles & Closures
+    label: Squid Supply Co. — Bottles & Closures
     label_singular: SKU
     folder: src/content/bottles
     create: true
@@ -104,6 +104,7 @@ collections:
           - { label: 'Closure (cap / cork)', value: closure }
       - { name: price, label: 'Unit price (AUD)', widget: number, value_type: float, min: 0 }
       - { name: priceFrom, label: '"From" pricing (quantity breaks)', widget: boolean, default: false }
+      - { name: perPallet, label: 'Bottles per pallet', widget: number, value_type: int, required: false, hint: 'Trade MOQ is one pallet. Leave blank for closures.' }
       - { name: note, label: Note, widget: string, required: false }
       - { name: order, label: 'Sort order', widget: number, value_type: int, default: 50 }
       - { name: image, label: Photo, widget: image, required: false }

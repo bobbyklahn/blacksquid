@@ -3,6 +3,7 @@
   "category": "bottle",
   "price": 2.3,
   "priceFrom": true,
+  "perPallet": 1287,
   "order": 90,
   "image": "/images/products/spak/superflint-square-700.webp"
 }

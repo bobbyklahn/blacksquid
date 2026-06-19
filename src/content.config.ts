@@ -29,6 +29,7 @@ const bottles = defineCollection({
     category: z.enum(['bottle', 'closure']),
     price: z.number(),
     priceFrom: z.boolean().default(false),
+    perPallet: z.number().optional(), // bottles per pallet (trade MOQ is one pallet); closures have none
     note: z.string().optional(),
     order: z.number().default(99),
     image: z.string().optional(),

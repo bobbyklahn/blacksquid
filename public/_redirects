@@ -1,3 +1,4 @@
 /shop/p/*  /gins/:splat  301
 /shop      /gins         301
 /thestills /distillery   301
+/spak      /supply       301

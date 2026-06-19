@@ -3,6 +3,7 @@
   "category": "bottle",
   "price": 2.05,
   "priceFrom": true,
+  "perPallet": 1584,
   "order": 10,
   "image": "/images/products/spak/taho-700-screw.webp"
 }

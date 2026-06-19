@@ -1,0 +1,173 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuoteAdd from '../components/QuoteAdd.jsx';
+import QuoteBasket from '../components/QuoteBasket.jsx';
+import { audFmt } from '../lib/format.js';
+
+const items = (await getCollection('bottles')).sort((a, b) => a.data.order - b.data.order);
+const bottles = items.filter((i) => i.data.category === 'bottle');
+const closures = items.filter((i) => i.data.category === 'closure');
+
+const specs = [
+  { k: '1 pallet', l: 'Minimum per bottle line' },
+  { k: 'TAHO · TSC · Super Flint', l: 'Glass profiles' },
+  { k: '200–700ml', l: 'Sizes' },
+  { k: 'Pickup or freight', l: 'Edinburgh North, SA' },
+];
+---
+<BaseLayout
+  theme="light"
+  title="Squid Supply Co. — Spirit Bottles & Closures, Wholesale — Black Squid Distillery"
+  description="Quality spirit bottles and closures for trade: TAHO, TSC and Super Flint glass in 200–700ml, screw cap and cork mouth, with matching closures. Wholesale from 600 bottles, quoted by email."
+  noCart
+>
+  <header class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Squid Supply Co. · Trade supply</p>
+      <h1>Bottles &amp; closures,<br />by the pallet or the box.</h1>
+      <p class="muted lede-copy">
+        The same glass we bottle our own spirits in. TAHO, TSC and Super Flint bottles from 200ml to
+        700ml, screw cap or cork mouth, with matching closures. Wholesale only — bottles ship
+        <strong>by the pallet</strong>; build your list, send it as one enquiry, and we&rsquo;ll come
+        back with quantity pricing and freight.
+      </p>
+
+      <div class="trade-bar">
+        {specs.map((s) => (
+          <div class="spec"><span class="k">{s.k}</span><span class="l">{s.l}</span></div>
+        ))}
+      </div>
+
+      <p class="depot muted">
+        Warehouse: 22 Priority Court, Edinburgh North, South Australia 5113 ·
+        <a href="mailto:admin@blacksquiddistillery.com.au" class="link">admin@blacksquiddistillery.com.au</a>
+      </p>
+    </div>
+  </header>
+
+  <div class="wrap supply-grid pad-s">
+    <div>
+      <section id="bottles">
+        <div class="cat-head">
+          <h2 class="cat-h">Bottles</h2>
+          <span class="cat-count">{bottles.length} lines</span>
+        </div>
+        <div class="cat-grid">
+          {bottles.map((b) => (
+            <article class="sku reveal">
+              <div class="sku-img">
+                {b.data.image
+                  ? <img src={b.data.image} alt={b.data.title} loading="lazy" width="220" height="275" />
+                  : <span class="sku-ph">No photo</span>}
+              </div>
+              <h3>{b.data.title}</h3>
+              <p class="sku-price">
+                {b.data.priceFrom && <span class="from">from </span>}
+                <span class="amt">{audFmt(b.data.price)}</span> <span class="ea">ea</span>
+                {b.data.perPallet
+                  ? <span class="tiers">{b.data.perPallet.toLocaleString('en-AU')} per pallet</span>
+                  : b.data.priceFrom && <span class="tiers">Quantity breaks apply</span>}
+              </p>
+              <div class="sku-buy">
+                <QuoteAdd client:visible slug={b.id} title={b.data.title} price={b.data.price} priceFrom={b.data.priceFrom}
+                  perPallet={b.data.perPallet}
+                  defaultQty={b.data.perPallet ?? 600}
+                  step={b.data.perPallet ?? 50}
+                  minQty={b.data.perPallet ?? 1} />
+                {b.data.perPallet && <p class="sku-moq">MOQ 1 pallet</p>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="closures" style="margin-top: 52px;">
+        <div class="cat-head">
+          <h2 class="cat-h">Closures</h2>
+          <span class="cat-count">{closures.length} lines</span>
+        </div>
+        <div class="cat-grid">
+          {closures.map((b) => (
+            <article class="sku reveal">
+              <div class="sku-img">
+                {b.data.image
+                  ? <img src={b.data.image} alt={b.data.title} loading="lazy" width="220" height="275" />
+                  : <span class="sku-ph">No photo</span>}
+              </div>
+              <h3>{b.data.title}</h3>
+              <p class="sku-price"><span class="amt">{audFmt(b.data.price)}</span> <span class="ea">ea</span></p>
+              <div class="sku-buy">
+                <QuoteAdd client:visible slug={b.id} title={b.data.title} price={b.data.price} priceFrom={b.data.priceFrom} />
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <QuoteBasket client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-head { padding: clamp(140px, 22vh, 210px) 0 clamp(26px, 4vh, 44px); }
+  .page-head h1 { font-size: clamp(2.2rem, 6vw, 4.2rem); margin: 12px 0 18px; }
+  .lede-copy { max-width: 62ch; }
+  .lede-copy strong { color: var(--trade-ink); font-weight: 500; }
+  .link { color: var(--squid); }
+
+  /* trade fact bar under the hero copy */
+  .trade-bar {
+    display: grid; grid-template-columns: repeat(4, auto); gap: 14px 40px;
+    margin: 34px 0 4px; padding: 22px 0; border-top: 1px solid var(--trade-line);
+    border-bottom: 1px solid var(--trade-line);
+  }
+  @media (max-width: 680px) { .trade-bar { grid-template-columns: 1fr 1fr; gap: 18px 24px; } }
+  .spec { display: flex; flex-direction: column; gap: 4px; }
+  .spec .k { font-family: var(--serif); font-size: 1.04rem; color: var(--trade-ink); line-height: 1.15; }
+  .spec .l { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trade-muted); }
+  .depot { margin-top: 22px; font-size: 0.82rem; }
+
+  .supply-grid {
+    display: grid; grid-template-columns: 1.62fr 1fr;
+    gap: clamp(30px, 4vw, 56px); align-items: start;
+  }
+  @media (max-width: 920px) { .supply-grid { grid-template-columns: 1fr; } }
+
+  .cat-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+  .cat-h { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .cat-count { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trade-muted); }
+
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(188px, 1fr)); gap: 18px; }
+
+  .sku {
+    display: flex; flex-direction: column;
+    background: var(--trade-card); border: 1px solid var(--trade-line);
+    border-radius: 6px; padding: 14px;
+    transition: border-color 0.35s var(--ease), transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+  }
+  .sku:hover {
+    border-color: #cfc9ba; transform: translateY(-3px);
+    box-shadow: 0 16px 34px -24px rgba(20, 23, 30, 0.55);
+  }
+  .sku-img {
+    aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; margin-bottom: 13px;
+    background: linear-gradient(180deg, #fdfdfb 0%, #f3f1ea 100%);
+    border: 1px solid var(--trade-line);
+    display: grid; place-items: center;
+  }
+  .sku-img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+  .sku-ph { font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: #b9b3a4; }
+  .sku h3 { font-size: 1rem; font-weight: 480; line-height: 1.28; color: var(--trade-ink); }
+  .sku-price { font-size: 0.82rem; color: var(--trade-muted); margin-top: 7px; }
+  .sku-price .from { font-style: italic; }
+  .sku-price .amt { font-family: var(--serif); font-size: 1.06rem; color: var(--trade-ink); }
+  .sku-price .ea { font-size: 0.72rem; }
+  .sku-price .tiers {
+    display: block; margin-top: 3px; font-size: 0.68rem;
+    letter-spacing: 0.04em; color: #927741;
+  }
+  .sku-buy { margin-top: auto; padding-top: 13px; }
+  .sku-moq { margin-top: 8px; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--trade-muted); }
+</style>

@@ -3,6 +3,7 @@
   "category": "bottle",
   "price": 1.68,
   "priceFrom": true,
+  "perPallet": 2079,
   "order": 40,
   "image": "/images/products/spak/taho-500-cork.webp"
 }

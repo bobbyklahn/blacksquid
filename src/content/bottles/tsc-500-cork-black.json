@@ -3,6 +3,7 @@
   "category": "bottle",
   "price": 2.05,
   "priceFrom": true,
+  "perPallet": 1848,
   "order": 70,
   "image": "/images/products/spak/tsc-500-cork-black.webp"
 }
