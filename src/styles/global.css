@@ -1,35 +1,76 @@
 /* ============================================================
-   BLACK SQUID DISTILLERY — design tokens & base styles
-   Ocean-dark gin in wine country. Inky, restrained, expensive.
+   BLACK SQUID DISTILLERY — "Specimen Sheet"
+   A distiller's pharmacopoeia: oyster paper, ink-black hand,
+   a litmus index that runs blue → blush. Witchcraft, catalogued.
+
+   Light is the default surface. Dark "brine" is reserved for
+   demonstration plates, the masthead, the footer colophon and
+   overlays — opt in with `.brine`, which re-declares the tokens
+   below so secondary text, rules and accents stay legible there.
    ============================================================ */
 
 :root {
-  /* ground */
-  --ink:    #07090d;            /* page ground — near-black, blue-leaning */
-  --ink-2:  #0c1016;            /* raised surface */
-  --ink-3:  #11161f;            /* cards */
-  /* text */
-  --paper:  #ecedea;            /* bone white */
-  --muted:  #8d96a3;            /* cool grey-blue secondary */
-  /* the colour change: indigo → blossom pink (Blue Bvjalie) */
-  --squid:  #5d7cf0;            /* bioluminescent indigo-blue */
-  --squid-deep: #2b3a8f;
-  --blush:  #e08cb4;            /* after the tonic */
-  /* Klahn estate metallic — sparing */
-  --brass:  #c2a878;
-  --line:   rgba(141, 150, 163, 0.18);
-  --line-strong: rgba(141, 150, 163, 0.34);
-  /* light "trade" surface — Squid Supply Co. catalogue */
-  --trade-bg:    #f4f2ec;        /* warm paper ground */
-  --trade-card:  #ffffff;        /* card face */
-  --trade-ink:   #16191e;        /* near-black text on paper */
-  --trade-muted: #5e6672;        /* secondary on paper */
-  --trade-line:  #e2ded3;        /* warm hairline */
+  /* ---- paper world (default) ---- */
+  --paper:  #e7e9e0;        /* oyster specimen paper — cool, never cream */
+  --plate:  #fbfbf7;        /* a clean plate laid on the sheet (cards) */
+  --sink:   #dddfd4;        /* a sunken well (image mounts) */
+  --text:   #14180f;        /* ink — near-black, faint olive */
+  --muted:  #5c6356;        /* annotation grey, warm-green */
+  --line:        rgba(20, 24, 15, 0.13);
+  --line-strong: rgba(20, 24, 15, 0.26);
+  --bg:     var(--paper);   /* the local background; flips in .brine */
 
-  --serif: 'Fraunces', Georgia, serif;
-  --sans:  'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  /* ---- the litmus axis (functional two-pole accent) ---- */
+  --cobalt: #2c45c8;        /* ink-blue, the "before" pole */
+  --violet: #7d63bd;        /* the transition midpoint */
+  --blush:  #cf6699;        /* blossom pink, the "after" pole */
+  --blush-ink: #b14d80;     /* deeper rose for blush TEXT on paper (legible) */
+  --litmus: linear-gradient(90deg, var(--cobalt) 2%, var(--violet) 50%, var(--blush) 98%);
+  --brass:  #816530;        /* Klahn estate metal, antique on paper */
+
+  /* ---- the deep (brine) ---- */
+  --brine:   #0a1413;       /* tank-room teal-black */
+  --brine-2: #0f1d1a;       /* raised brine */
+  --brine-3: #15231f;       /* brine plate face */
+  --bone:    #e9ebe2;       /* light text on brine */
+
+  /* ---- type ---- */
+  --display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --sans:    'Archivo', system-ui, -apple-system, sans-serif;
+  --mono:    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --serif:   var(--display);  /* legacy alias: headings/prices use --serif */
+
   --maxw: 1180px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- legacy aliases (keep old inline styles working) ---- */
+  --ink:    var(--brine);
+  --ink-2:  var(--brine-2);
+  --ink-3:  var(--brine-3);
+  --squid:  var(--cobalt);      /* flips lighter inside .brine */
+  --squid-deep: #1b2a86;
+
+  /* Squid Supply Co. trade tokens → now native to the paper system */
+  --trade-bg:    var(--paper);
+  --trade-card:  var(--plate);
+  --trade-ink:   var(--text);
+  --trade-muted: var(--muted);
+  --trade-line:  var(--line-strong);
+}
+
+/* ---- brine context: dark plates, masthead, footer, overlays ---- */
+.brine {
+  --bg:    var(--brine);
+  --plate: var(--brine-3);
+  --sink:  #0b1816;
+  --text:  var(--bone);
+  --muted: #8f9c92;
+  --line:        rgba(233, 235, 226, 0.15);
+  --line-strong: rgba(233, 235, 226, 0.30);
+  --squid: #7e98ff;          /* lift the ink-blue so links read on brine */
+  --brass: #c7a25e;
+  background: var(--bg);
+  color: var(--text);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,212 +78,226 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--sans);
-  font-weight: 300;
-  line-height: 1.7;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
+/* a whisper of fibre so the paper isn't a flat fill */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 78% -8%, rgba(44, 69, 200, 0.05), transparent 55%),
+    radial-gradient(90% 70% at 0% 108%, rgba(207, 102, 153, 0.045), transparent 52%);
+}
+
 h1, h2, h3, h4 {
-  font-family: var(--serif);
-  font-weight: 480;
-  line-height: 1.06;
-  letter-spacing: 0.005em;
+  font-family: var(--display);
+  font-weight: 540;
+  line-height: 1.04;
+  letter-spacing: -0.005em;
   text-wrap: balance;
 }
 
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { font-family: var(--sans); cursor: pointer; }
+strong { font-weight: 600; }
 
-::selection { background: var(--squid-deep); color: var(--paper); }
-
+::selection { background: var(--cobalt); color: #fff; }
 :focus-visible { outline: 2px solid var(--squid); outline-offset: 3px; }
 
 /* ---------- primitives ---------- */
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
-.pad  { padding: clamp(76px, 11vh, 150px) 0; }
-.pad-s{ padding: clamp(48px, 7vh, 90px) 0; }
+.pad  { padding: clamp(72px, 10vh, 132px) 0; }
+.pad-s{ padding: clamp(46px, 7vh, 84px) 0; }
 
+/* shared interior page header (under the fixed nav) */
+.page-head { padding: clamp(150px, 22vh, 220px) 0 clamp(28px, 5vh, 56px); }
+.page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 14px 0 18px; }
+
+/* ---------- the specimen annotation (replaces the eyebrow) ---------- */
+/* set in the mono lab hand; a leading rule reads as a logbook tick.    */
 .eyebrow {
-  font-size: 0.7rem; letter-spacing: 0.34em; text-transform: uppercase;
-  color: var(--squid); font-weight: 500;
+  display: inline-flex; align-items: center; gap: 0.7em;
+  font-family: var(--mono); font-size: 0.7rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+}
+.eyebrow::before {
+  content: ''; width: 1.7em; height: 1px; background: currentColor; opacity: 0.55;
 }
 .eyebrow.brass { color: var(--brass); }
-.eyebrow.blush { color: var(--blush); }
+.eyebrow.blush { color: var(--blush-ink); }
+.eyebrow.cobalt { color: var(--cobalt); }
+.brine .eyebrow.blush { color: var(--blush); }   /* lighter pink reads on brine */
 
-h2.section-h { font-size: clamp(2rem, 5vw, 3.4rem); margin: 14px 0 22px; }
+h2.section-h { font-size: clamp(2rem, 5vw, 3.3rem); margin: 16px 0 22px; }
 .lede {
-  font-family: var(--serif);
-  font-size: clamp(1.45rem, 3vw, 2.4rem);
-  line-height: 1.3; max-width: 26ch;
+  font-family: var(--display); font-weight: 420;
+  font-size: clamp(1.4rem, 3vw, 2.3rem); line-height: 1.28; max-width: 24ch;
 }
 .muted { color: var(--muted); }
+.body  { font-size: 1.02rem; }
 p.body + p.body { margin-top: 16px; }
 
 .twocol {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 96px); align-items: center;
+  gap: clamp(40px, 6vw, 92px); align-items: center;
 }
 @media (max-width: 840px) { .twocol { grid-template-columns: 1fr; } }
 
-/* shared interior page header (under the fixed nav) */
-.page-head { padding: clamp(140px, 22vh, 220px) 0 clamp(30px, 5vh, 60px); }
-.page-head h1 { font-size: clamp(2.6rem, 7vw, 5rem); margin: 12px 0 16px; }
-
-.btn {
-  display: inline-block; padding: 14px 32px;
-  border: 1px solid var(--squid); background: transparent;
-  color: var(--paper); font-size: 0.76rem; letter-spacing: 0.22em;
-  text-transform: uppercase; font-weight: 500;
-  transition: background 0.45s var(--ease), color 0.45s var(--ease), border-color 0.45s var(--ease);
+/* mono data block — the measured facts of a specimen */
+.measure { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.02em; }
+.measure .row {
+  display: flex; justify-content: space-between; gap: 18px;
+  padding: 7px 0; border-bottom: 1px solid var(--line);
 }
-.btn:hover { background: var(--squid); color: var(--ink); }
-.btn.ghost { border-color: var(--line-strong); }
-.btn.ghost:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
-.btn.solid { background: var(--squid); color: var(--ink); }
-.btn.solid:hover { background: var(--blush); border-color: var(--blush); }
+.measure .k { color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.66rem; }
+.measure .v { color: var(--text); }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block; padding: 13px 28px;
+  border: 1px solid var(--text); background: transparent; color: var(--text);
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em;
+  text-transform: uppercase; font-weight: 500;
+  transition: background 0.4s var(--ease), color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.btn:hover { background: var(--text); color: var(--bg); }
+.btn.ghost { border-color: var(--line-strong); color: var(--text); }
+.btn.ghost:hover { background: var(--text); border-color: var(--text); color: var(--bg); }
+.btn.solid { background: var(--cobalt); border-color: var(--cobalt); color: #fff; }
+.btn.solid:hover { background: var(--blush); border-color: var(--blush); color: #2a0f1c; }
 .btn[disabled] { opacity: 0.4; pointer-events: none; }
 
 .tag {
-  display: inline-block; font-size: 0.64rem; letter-spacing: 0.2em;
-  text-transform: uppercase; padding: 5px 12px;
-  border: 1px solid var(--line-strong); border-radius: 99px; color: var(--muted);
+  display: inline-block; font-family: var(--mono);
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 5px 11px; border: 1px solid var(--line-strong); border-radius: 99px; color: var(--muted);
 }
-.tag.soldout { color: var(--blush); border-color: var(--blush); }
+.tag.soldout { color: var(--blush-ink); border-color: var(--blush-ink); }
+.brine .tag.soldout { color: var(--blush); border-color: var(--blush); }
 
 /* ---------- nav ---------- */
 .nav {
   position: fixed; inset: 0 0 auto 0; z-index: 60;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 28px;
-  background: linear-gradient(to bottom, rgba(7, 9, 13, 0.92), rgba(7, 9, 13, 0));
+  padding: 16px 28px;
+  background: linear-gradient(to bottom, var(--paper), var(--paper) 62%, rgba(231, 233, 224, 0));
   transition: background 0.4s;
 }
-.nav .brand { display: flex; align-items: center; gap: 12px; }
-.nav .brand svg { height: 34px; width: auto; }
-.nav .brand .wordmark { font-family: var(--serif); font-size: 1.06rem; letter-spacing: 0.18em; font-weight: 520; }
-.nav .brand .wordmark small { display: block; font-family: var(--sans); font-size: 0.52rem; letter-spacing: 0.5em; color: var(--muted); font-weight: 400; }
+.nav .brand { display: flex; align-items: center; gap: 12px; color: var(--text); }
+.nav .brand svg { height: 32px; width: auto; }
+.nav .brand .wordmark { font-family: var(--display); font-size: 1.12rem; letter-spacing: 0.06em; font-weight: 560; line-height: 1; }
+.nav .brand .wordmark small {
+  display: block; font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.34em;
+  color: var(--muted); font-weight: 500; margin-top: 4px;
+}
 .nav-right { display: flex; align-items: center; gap: 22px; }
-.nav .links { display: flex; gap: 26px; align-items: center; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; }
-.nav .links a { opacity: 0.82; transition: opacity 0.3s, color 0.3s; padding: 6px 0; }
-.nav .links a:hover { opacity: 1; color: var(--squid); }
-.nav-toggle { display: none; background: none; border: none; color: var(--paper); font-size: 1.5rem; line-height: 1; }
+.nav .links { display: flex; gap: 24px; align-items: center; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.nav .links a { color: var(--text); opacity: 0.72; transition: opacity 0.3s, color 0.3s; padding: 6px 0; }
+.nav .links a:hover { opacity: 1; color: var(--cobalt); }
+.nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; line-height: 1; }
 @media (max-width: 920px) {
   .nav .links {
     display: none; position: absolute; top: 100%; right: 16px;
     flex-direction: column; gap: 4px; align-items: flex-end;
-    background: var(--ink-2); border: 1px solid var(--line);
-    padding: 18px 22px; min-width: 200px;
+    background: var(--plate); border: 1px solid var(--line-strong);
+    padding: 18px 22px; min-width: 210px;
+    box-shadow: 0 24px 48px -34px rgba(20, 24, 15, 0.5);
   }
   .nav .links a { padding: 8px 0; }
   .nav .links.open { display: flex; }
   .nav-toggle { display: block; }
 }
 
-/* ---------- footer ---------- */
-footer { border-top: 1px solid var(--line); padding: 64px 0 40px; background: var(--ink-2); }
+/* ---------- footer (brine colophon) ---------- */
+footer { border-top: 2px solid transparent; border-image: var(--litmus) 1; padding: 60px 0 40px; }
 footer .fgrid { display: flex; flex-wrap: wrap; gap: 48px; justify-content: space-between; }
-footer h4 { font-size: 1rem; letter-spacing: 0.06em; margin-bottom: 12px; }
-footer .fcol { font-size: 0.84rem; line-height: 2; color: var(--muted); }
+footer h4 { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 14px; color: var(--muted); font-weight: 500; }
+footer .fcol { font-size: 0.86rem; line-height: 2; color: var(--muted); }
 footer .fcol a:hover { color: var(--squid); }
 footer .legal {
-  color: var(--muted); font-size: 0.73rem; margin-top: 48px;
-  padding-top: 24px; border-top: 1px solid var(--line); line-height: 1.9;
+  color: var(--muted); font-size: 0.72rem; margin-top: 46px;
+  padding-top: 22px; border-top: 1px solid var(--line); line-height: 1.9;
+  font-family: var(--mono); letter-spacing: 0.01em;
 }
 
-/* ---------- product cards ---------- */
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
+/* ---------- product / specimen cards ---------- */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
 @media (max-width: 980px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .grid-3 { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
 
 .pcard {
-  border: 1px solid var(--line); background: var(--ink-2);
-  padding: 22px; border-radius: 3px; position: relative;
+  border: 1px solid var(--line-strong); background: var(--plate);
+  padding: 16px 16px 18px; border-radius: 2px; position: relative;
   display: flex; flex-direction: column;
-  transition: border-color 0.4s var(--ease), transform 0.5s var(--ease);
+  transition: border-color 0.4s var(--ease), transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
-.pcard:hover { border-color: var(--line-strong); transform: translateY(-4px); }
+.pcard:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -30px rgba(20, 24, 15, 0.55); border-color: var(--text); }
 .pcard .pimg {
   aspect-ratio: 3 / 4; border-radius: 2px; overflow: hidden; position: relative;
-  background: radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));
-  display: grid; place-items: center;
+  background: var(--sink); display: grid; place-items: center;
+  border: 1px solid var(--line);
 }
-.pcard .pimg img { width: 100%; height: 100%; object-fit: contain; padding: 10%; transition: transform 0.6s var(--ease); }
+.pcard .pimg img { width: 100%; height: 100%; object-fit: contain; padding: 9%; transition: transform 0.6s var(--ease); }
 
-/* white-background product photography sits on a deliberate gallery plinth:
-   pure white so the photo edge disappears, vignetted so it reads as lit, not pasted */
-.plinth, .pcard .pimg.plinth { position: relative; background: #fff; }
+/* studio shots on white sit on a lit plate; dark/illustrated art keeps a brine well */
+.plinth, .pcard .pimg.plinth { background: #fff; }
 .plinth::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(115% 85% at 50% 32%, transparent 52%, rgba(7, 9, 13, 0.16) 100%);
+  background: radial-gradient(120% 88% at 50% 26%, transparent 56%, rgba(20, 24, 15, 0.10) 100%);
 }
-.pcard:hover .pimg img { transform: scale(1.035); }
-.pcard h3 { font-size: 1.32rem; margin: 18px 0 2px; }
-.pcard .pmeta { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.pcard .pimg:not(.plinth) { background: radial-gradient(120% 100% at 50% 0%, var(--brine-3), var(--brine)); }
+.pcard:hover .pimg img { transform: scale(1.03); }
+.pcard h3 { font-size: 1.28rem; margin: 16px 0 2px; font-weight: 500; }
+.pcard h3 a:hover { color: var(--cobalt); }
+.pcard .pmeta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .pcard .pmeta .range-k { color: var(--brass); }
-.pcard .pmeta .range-b { color: var(--squid); }
+.pcard .pmeta .range-b { color: var(--cobalt); }
 .pcard .pnote { font-size: 0.88rem; color: var(--muted); margin-top: 10px; flex: 1; }
-.pcard .prow { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); gap: 10px; }
-.price { font-family: var(--serif); font-size: 1.25rem; }
-.price .was { font-size: 0.85rem; color: var(--muted); text-decoration: line-through; margin-left: 8px; font-family: var(--sans); }
+.pcard .prow { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); gap: 10px; }
+.price { font-family: var(--display); font-size: 1.3rem; font-weight: 500; }
+.price .was { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); text-decoration: line-through; margin-left: 8px; }
 
 /* ---------- reveal on scroll ---------- */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
 
 /* ---------- forms ---------- */
 input, textarea, select {
-  width: 100%; background: var(--ink); border: 1px solid var(--line-strong);
-  color: var(--paper); padding: 12px 14px; font-family: var(--sans);
-  font-size: 0.92rem; border-radius: 2px;
+  width: 100%; background: var(--plate); border: 1px solid var(--line-strong);
+  color: var(--text); padding: 12px 14px; font-family: var(--sans);
+  font-size: 0.94rem; border-radius: 2px;
 }
-input:focus, textarea:focus, select:focus { outline: 1px solid var(--squid); border-color: var(--squid); }
-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); display: block; margin: 16px 0 6px; }
+input:focus, textarea:focus, select:focus { outline: 1px solid var(--cobalt); border-color: var(--cobalt); }
+label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); display: block; margin: 16px 0 6px; }
+
+/* ---------- the litmus index (the signature) ---------- */
+/* a blue→blush spectrum strip — the spine of the whole site */
+.litmus, .divider-ink {
+  height: 2px; border: none; margin: 0; background: var(--litmus); opacity: 0.92;
+}
+.litmus-strip {
+  position: relative; height: 8px; border-radius: 99px; overflow: hidden;
+  background: var(--litmus);
+}
+.litmus-strip::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 1px, transparent 1px 24px);
+}
+
+/* ---------- a framed dark demonstration plate ---------- */
+.plate-dark {
+  position: relative; background: var(--brine); color: var(--bone);
+  border: 1px solid var(--line-strong); border-radius: 3px; overflow: hidden;
+}
 
 /* ---------- utility ---------- */
 .center { text-align: center; }
-.divider-ink {
-  height: 1px; border: none; margin: 0;
-  background: linear-gradient(to right, transparent, var(--squid-deep), var(--blush), transparent);
-  opacity: 0.45;
-}
-
-/* ============================================================
-   LIGHT THEME — trade pages (Squid Supply Co.)
-   The catalogue sits on a warm white sheet; the shared nav, forms
-   and outline buttons flip to ink-on-paper. The footer stays dark
-   so it still bookends the site.
-   ============================================================ */
-body.light { background: var(--trade-bg); color: var(--trade-ink); }
-body.light .muted { color: var(--trade-muted); }
-
-/* nav: white scrim + ink text, instead of the dark gradient */
-body.light .nav {
-  background: linear-gradient(to bottom, rgba(244, 242, 236, 0.96), rgba(244, 242, 236, 0));
-  color: var(--trade-ink);
-}
-body.light .nav-toggle { color: var(--trade-ink); }
-body.light .nav .brand .wordmark small { color: var(--trade-muted); }
-body.light .nav .links a:hover { color: var(--squid); }
-@media (max-width: 920px) {
-  body.light .nav .links { background: var(--trade-card); border-color: var(--trade-line); }
-}
-
-/* forms on paper */
-body.light input, body.light textarea, body.light select {
-  background: var(--trade-card); color: var(--trade-ink); border-color: var(--trade-line);
-}
-body.light label { color: var(--trade-muted); }
-
-/* outline button reads on white (default text was bone) */
-body.light .btn { color: var(--trade-ink); }
-body.light .btn:hover { color: #fff; }
-body.light .btn.solid { color: #fff; }
-
-/* footer keeps its dark identity even on a light page */
-body.light footer { color: var(--paper); }

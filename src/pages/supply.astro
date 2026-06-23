@@ -125,8 +125,8 @@ const specs = [
   }
   @media (max-width: 680px) { .trade-bar { grid-template-columns: 1fr 1fr; gap: 18px 24px; } }
   .spec { display: flex; flex-direction: column; gap: 4px; }
-  .spec .k { font-family: var(--serif); font-size: 1.04rem; color: var(--trade-ink); line-height: 1.15; }
-  .spec .l { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trade-muted); }
+  .spec .k { font-family: var(--display); font-size: 1.06rem; color: var(--trade-ink); line-height: 1.15; }
+  .spec .l { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--trade-muted); }
   .depot { margin-top: 22px; font-size: 0.82rem; }
 
   .supply-grid {
@@ -136,8 +136,8 @@ const specs = [
   @media (max-width: 920px) { .supply-grid { grid-template-columns: 1fr; } }
 
   .cat-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
-  .cat-h { font-size: clamp(1.5rem, 3vw, 2rem); }
-  .cat-count { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--trade-muted); }
+  .cat-h { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 540; }
+  .cat-count { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--trade-muted); }
 
   .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(188px, 1fr)); gap: 18px; }
 
@@ -148,26 +148,26 @@ const specs = [
     transition: border-color 0.35s var(--ease), transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
   }
   .sku:hover {
-    border-color: #cfc9ba; transform: translateY(-3px);
-    box-shadow: 0 16px 34px -24px rgba(20, 23, 30, 0.55);
+    border-color: var(--text); transform: translateY(-3px);
+    box-shadow: 0 16px 34px -24px rgba(20, 24, 15, 0.5);
   }
   .sku-img {
     aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; margin-bottom: 13px;
-    background: linear-gradient(180deg, #fdfdfb 0%, #f3f1ea 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #f1f2ec 100%);
     border: 1px solid var(--trade-line);
     display: grid; place-items: center;
   }
   .sku-img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
-  .sku-ph { font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: #b9b3a4; }
-  .sku h3 { font-size: 1rem; font-weight: 480; line-height: 1.28; color: var(--trade-ink); }
+  .sku-ph { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--trade-muted); }
+  .sku h3 { font-size: 1rem; font-weight: 540; line-height: 1.28; color: var(--trade-ink); }
   .sku-price { font-size: 0.82rem; color: var(--trade-muted); margin-top: 7px; }
   .sku-price .from { font-style: italic; }
-  .sku-price .amt { font-family: var(--serif); font-size: 1.06rem; color: var(--trade-ink); }
-  .sku-price .ea { font-size: 0.72rem; }
+  .sku-price .amt { font-family: var(--display); font-size: 1.1rem; color: var(--trade-ink); }
+  .sku-price .ea { font-family: var(--mono); font-size: 0.66rem; }
   .sku-price .tiers {
-    display: block; margin-top: 3px; font-size: 0.68rem;
-    letter-spacing: 0.04em; color: #927741;
+    display: block; margin-top: 4px; font-family: var(--mono); font-size: 0.64rem;
+    letter-spacing: 0.02em; color: var(--brass);
   }
   .sku-buy { margin-top: auto; padding-top: 13px; }
-  .sku-moq { margin-top: 8px; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--trade-muted); }
+  .sku-moq { margin-top: 8px; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--trade-muted); }
 </style>

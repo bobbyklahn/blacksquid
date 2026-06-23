@@ -8,8 +8,8 @@ interface Props {
   description?: string;
   /** hide the spirits cart on trade pages */
   noCart?: boolean;
-  /** 'light' renders the page on the white trade surface (Squid Supply Co.) */
-  theme?: 'dark' | 'light';
+  /** the whole site reads as a light specimen sheet; 'brine' flips a page fully dark (unused for now) */
+  theme?: 'light' | 'brine';
   ogImage?: string;
   jsonLd?: object;
 }
@@ -17,7 +17,7 @@ const {
   title,
   description = 'Black Squid Distillery — small-batch gin distilled in the heart of the Barossa Valley, South Australia. Witchcraft with pure science.',
   noCart = false,
-  theme = 'dark',
+  theme = 'light',
   ogImage = '/images/og-default.png',
   jsonLd,
 } = Astro.props;
@@ -42,10 +42,10 @@ const year = new Date().getFullYear();
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,480;9..144,560&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
-<body class={theme === 'light' ? 'light' : undefined}>
+<body class={theme === 'brine' ? 'brine' : undefined}>
   <AgeGate client:load />
 
   <nav class="nav" aria-label="Main">
@@ -75,12 +75,19 @@ const year = new Date().getFullYear();
     <slot />
   </main>
 
-  <footer>
+  <footer class="brine">
     <div class="wrap">
       <div class="fgrid">
         <div style="max-width: 300px;">
-          <h4>Black Squid Distillery</h4>
-          <p class="fcol">
+          <a class="fmark" href="/" aria-label="Black Squid Distillery — home">
+            <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="2.4" />
+              <path d="M14 27c0-6 4.5-10.5 10-10.5S34 21 34 27c0 2.4-1 4-2.6 4-1.4 0-2.2-1-2.2-2.6 0-2.8-2-4.9-5.2-4.9s-5.2 2.1-5.2 4.9c0 1.6-.8 2.6-2.2 2.6C15 31 14 29.4 14 27Z" fill="currentColor" />
+              <path d="M19 31.5c.2 2-.6 3.8-2.4 5M24 32.5v5.2M29 31.5c-.2 2 .6 3.8 2.4 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span class="fword">Black Squid<small>Distillery · Est. Barossa Valley</small></span>
+          </a>
+          <p class="fcol" style="margin-top: 18px;">
             960 Light Pass Road,<br />
             Vine Vale, Barossa Valley<br />
             South Australia 5352
@@ -119,6 +126,13 @@ const year = new Date().getFullYear();
       </p>
     </div>
   </footer>
+
+  <style>
+    .fmark { display: inline-flex; align-items: center; gap: 12px; color: var(--bone); }
+    .fmark svg { height: 36px; width: auto; color: var(--squid); }
+    .fword { font-family: var(--display); font-size: 1.2rem; font-weight: 560; letter-spacing: 0.02em; line-height: 1.05; }
+    .fword small { display: block; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+  </style>
 
   <script>
     // mobile nav

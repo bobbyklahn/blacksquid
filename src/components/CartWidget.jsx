@@ -86,7 +86,7 @@ export default function CartWidget() {
             </div>
 
             {items.length === 0 ? (
-              <p style={st.empty}>The cart is empty — the ocean is full.<br /><a href="/gins" style={{ color: '#5d7cf0' }}>Explore the gins →</a></p>
+              <p style={st.empty}>The cart is empty — the ocean is full.<br /><a href="/gins" style={{ color: '#7e98ff' }}>Explore the gins →</a></p>
             ) : (
               <>
                 <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -152,42 +152,42 @@ export default function CartWidget() {
 const st = {
   btn: { position: 'relative', background: 'none', border: 'none', color: 'inherit', display: 'flex', alignItems: 'center', padding: 4 },
   badge: {
-    position: 'absolute', top: -7, right: -9, background: '#e08cb4', color: '#07090d',
-    borderRadius: 99, fontSize: '0.62rem', fontWeight: 700, minWidth: 16, height: 16,
+    position: 'absolute', top: -7, right: -9, background: '#cf6699', color: '#fff',
+    borderRadius: 99, fontFamily: 'var(--mono)', fontSize: '0.6rem', fontWeight: 600, minWidth: 16, height: 16,
     display: 'grid', placeItems: 'center', padding: '0 4px',
   },
-  veil: { position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(7,9,13,0.6)', backdropFilter: 'blur(3px)' },
+  veil: { position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(10,20,19,0.55)', backdropFilter: 'blur(3px)' },
   drawer: {
     position: 'fixed', top: 0, right: 0, bottom: 0, width: 'min(430px, 94vw)', zIndex: 91,
-    background: '#0c1016', borderLeft: '1px solid rgba(141,150,163,0.25)',
+    background: '#0f1d1a', color: '#e9ebe2', borderLeft: '1px solid rgba(233,235,226,0.2)',
     display: 'flex', flexDirection: 'column', padding: '22px 24px',
     textTransform: 'none', letterSpacing: 'normal',
   },
-  head: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16, borderBottom: '1px solid rgba(141,150,163,0.18)' },
-  title: { fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.25rem', fontWeight: 480 },
-  x: { background: 'none', border: 'none', color: '#8d96a3', fontSize: '1rem' },
-  empty: { color: '#8d96a3', marginTop: 30, lineHeight: 2, fontSize: '0.95rem' },
-  line: { display: 'flex', alignItems: 'center', gap: 12, padding: '16px 0', borderBottom: '1px solid rgba(141,150,163,0.12)' },
+  head: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 16, borderBottom: '1px solid rgba(233,235,226,0.16)' },
+  title: { fontFamily: 'var(--display)', fontSize: '1.3rem', fontWeight: 540 },
+  x: { background: 'none', border: 'none', color: '#8f9c92', fontSize: '1rem' },
+  empty: { color: '#8f9c92', marginTop: 30, lineHeight: 2, fontSize: '0.95rem' },
+  line: { display: 'flex', alignItems: 'center', gap: 12, padding: '16px 0', borderBottom: '1px solid rgba(233,235,226,0.1)' },
   lineTitle: { fontSize: '0.88rem', lineHeight: 1.4 },
-  linePrice: { color: '#8d96a3', fontSize: '0.8rem', marginTop: 2 },
-  gone: { color: '#e08cb4', fontSize: '0.74rem', marginTop: 2, fontStyle: 'italic' },
+  linePrice: { fontFamily: 'var(--mono)', color: '#8f9c92', fontSize: '0.78rem', marginTop: 3 },
+  gone: { color: '#cf6699', fontSize: '0.74rem', marginTop: 2, fontStyle: 'italic' },
   qtyRow: { display: 'flex', alignItems: 'center', gap: 8 },
-  qbtn: { width: 26, height: 26, background: 'transparent', color: '#ecedea', border: '1px solid rgba(141,150,163,0.35)', borderRadius: 2 },
-  qty: { minWidth: 18, textAlign: 'center', fontSize: '0.9rem' },
-  rm: { background: 'none', border: 'none', color: '#5d6573', fontSize: '0.68rem', textDecoration: 'underline' },
-  xsell: { padding: '14px 0 10px', borderTop: '1px dashed rgba(141,150,163,0.25)' },
-  xsellHead: { fontSize: '0.64rem', letterSpacing: '0.26em', textTransform: 'uppercase', color: '#c2a878', margin: '0 0 8px' },
+  qbtn: { width: 26, height: 26, background: 'transparent', color: '#e9ebe2', border: '1px solid rgba(233,235,226,0.3)', borderRadius: 2 },
+  qty: { minWidth: 18, textAlign: 'center', fontFamily: 'var(--mono)', fontSize: '0.88rem' },
+  rm: { background: 'none', border: 'none', color: '#6f7a71', fontFamily: 'var(--mono)', fontSize: '0.64rem', textDecoration: 'underline' },
+  xsell: { padding: '14px 0 10px', borderTop: '1px dashed rgba(233,235,226,0.22)' },
+  xsellHead: { fontFamily: 'var(--mono)', fontSize: '0.62rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: '#c7a25e', margin: '0 0 8px' },
   xsellRow: { display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0' },
-  xsellImg: { width: 34, height: 44, objectFit: 'contain', background: '#11161f', border: '1px solid rgba(141,150,163,0.2)', borderRadius: 2, flexShrink: 0 },
+  xsellImg: { width: 34, height: 44, objectFit: 'contain', background: '#15231f', border: '1px solid rgba(233,235,226,0.18)', borderRadius: 2, flexShrink: 0 },
   xsellTitle: { fontSize: '0.78rem', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' },
-  xsellAdd: { background: 'transparent', color: '#5d7cf0', border: '1px solid rgba(93,124,240,0.5)', borderRadius: 2, padding: '6px 12px', fontSize: '0.68rem', letterSpacing: '0.1em', whiteSpace: 'nowrap' },
-  foot: { paddingTop: 16, borderTop: '1px solid rgba(141,150,163,0.18)' },
-  totalRow: { display: 'flex', justifyContent: 'space-between', fontFamily: "'Fraunces', Georgia, serif", fontSize: '1.15rem', marginBottom: 6 },
-  fine: { color: '#5d6573', fontSize: '0.68rem', lineHeight: 1.6, margin: '4px 0 12px' },
-  err: { color: '#e08cb4', fontSize: '0.78rem', margin: '8px 0' },
+  xsellAdd: { background: 'transparent', color: '#7e98ff', border: '1px solid rgba(126,152,255,0.5)', borderRadius: 2, padding: '6px 12px', fontFamily: 'var(--mono)', fontSize: '0.64rem', letterSpacing: '0.08em', whiteSpace: 'nowrap' },
+  foot: { paddingTop: 16, borderTop: '1px solid rgba(233,235,226,0.16)' },
+  totalRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: 'var(--display)', fontSize: '1.2rem', marginBottom: 6 },
+  fine: { fontFamily: 'var(--mono)', color: '#6f7a71', fontSize: '0.64rem', lineHeight: 1.65, margin: '4px 0 12px' },
+  err: { color: '#cf6699', fontSize: '0.78rem', margin: '8px 0' },
   checkout: {
-    width: '100%', padding: '15px 18px', background: '#5d7cf0', color: '#07090d',
-    border: 'none', letterSpacing: '0.16em', textTransform: 'uppercase', fontSize: '0.74rem', fontWeight: 600,
+    width: '100%', padding: '15px 18px', background: '#2c45c8', color: '#fff',
+    border: 'none', fontFamily: 'var(--mono)', letterSpacing: '0.14em', textTransform: 'uppercase', fontSize: '0.7rem', fontWeight: 600,
   },
-  clear: { width: '100%', marginTop: 8, padding: 8, background: 'none', border: 'none', color: '#5d6573', fontSize: '0.68rem', textDecoration: 'underline' },
+  clear: { width: '100%', marginTop: 8, padding: 8, background: 'none', border: 'none', color: '#6f7a71', fontFamily: 'var(--mono)', fontSize: '0.64rem', textDecoration: 'underline' },
 };

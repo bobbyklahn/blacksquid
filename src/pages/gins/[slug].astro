@@ -141,35 +141,35 @@ const jsonLd = {
 
 <style>
   .product-wrap { padding-top: clamp(120px, 18vh, 170px); }
-  .crumb { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 34px; }
-  .crumb a:hover { color: var(--squid); }
+  .crumb { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+  .crumb a:hover { color: var(--cobalt); }
   .crumb span { margin: 0 6px; }
   .gallery .main-img {
-    border: 1px solid var(--line); border-radius: 3px; overflow: hidden;
-    background: radial-gradient(120% 100% at 50% 0%, var(--ink-3), var(--ink));
+    border: 1px solid var(--line-strong); border-radius: 3px; overflow: hidden;
+    background: radial-gradient(120% 100% at 50% 0%, var(--brine-3), var(--brine));
   }
   .gallery .main-img.plinth { background: #fff; }
   .gallery img { width: 100%; height: auto; object-fit: contain; }
-  .pdetail h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); margin: 10px 0 8px; }
-  .pmeta-line { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 18px; }
-  .price.big { font-size: 1.9rem; margin-bottom: 26px; display: block; }
-  .box { margin: -6px 0 26px; border: 1px solid var(--line); border-radius: 4px; padding: 16px 18px; background: var(--ink-2); }
-  .box-head { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--squid); margin-bottom: 12px; }
+  .pdetail h1 { font-size: clamp(2rem, 4.6vw, 3.4rem); margin: 10px 0 8px; font-weight: 540; }
+  .pmeta-line { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+  .price.big { font-size: 1.95rem; margin-bottom: 26px; display: block; }
+  .box { margin: -6px 0 26px; border: 1px solid var(--line-strong); border-radius: 4px; padding: 16px 18px; background: var(--plate); }
+  .box-head { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cobalt); margin-bottom: 12px; }
   .box-list { list-style: none; margin: 0 0 14px; padding: 0; }
   .box-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
-  .box-item:hover .box-name { color: var(--squid); }
-  .box-item.na { opacity: 0.55; }
+  .box-item:hover .box-name { color: var(--cobalt); }
+  .box-item.na { opacity: 0.5; }
   .box-item img { width: 40px; height: 54px; object-fit: contain; flex-shrink: 0; }
   .box-name { flex: 1; font-size: 0.9rem; transition: color 0.25s; }
-  .box-price { font-size: 0.84rem; color: var(--muted); }
+  .box-price { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
   .box-price .was { text-decoration: line-through; opacity: 0.6; margin-left: 6px; }
   .box-na { font-style: italic; }
   .box-note { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin: 2px 0 0; }
-  .box-sum > div { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.9rem; color: var(--muted); }
-  .box-save { color: var(--paper); font-weight: 600; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 9px; }
-  .box-save span:last-child { color: var(--squid); }
-  .serve { margin-top: 22px; padding: 16px 18px; border-left: 2px solid var(--squid); background: var(--ink-2); font-size: 0.92rem; color: var(--muted); }
-  .serve strong { color: var(--paper); font-weight: 500; }
+  .box-sum > div { display: flex; justify-content: space-between; padding: 4px 0; font-family: var(--mono); font-size: 0.82rem; color: var(--muted); }
+  .box-save { color: var(--text); font-weight: 600; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 9px; }
+  .box-save span:last-child { color: var(--cobalt); }
+  .serve { margin-top: 22px; padding: 15px 18px; border-left: 2px solid var(--cobalt); background: var(--plate); font-size: 0.94rem; color: var(--muted); }
+  .serve strong { color: var(--text); font-family: var(--mono); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; }
   .buy-row { margin-top: 30px; }
-  .fine { font-size: 0.72rem; margin-top: 14px; line-height: 1.7; }
+  .fine { font-family: var(--mono); font-size: 0.64rem; margin-top: 14px; line-height: 1.75; }
 </style>
