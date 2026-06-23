@@ -24,12 +24,12 @@ const fmt = (d) => d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long'
 
 <style>
   .post-wrap { padding-top: clamp(130px, 20vh, 190px); padding-bottom: 90px; max-width: 760px; }
-  .crumb { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 30px; }
-  .crumb a:hover { color: var(--squid); }
+  .crumb { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+  .crumb a:hover { color: var(--cobalt); }
   .crumb span { margin: 0 6px; }
-  h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); margin: 12px 0 30px; }
-  .prose :global(p) { margin-bottom: 18px; color: var(--muted); }
-  .prose :global(h2) { font-size: 1.5rem; margin: 34px 0 12px; }
-  .prose :global(a) { color: var(--squid); text-decoration: underline; }
+  h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); margin: 12px 0 30px; font-weight: 540; }
+  .prose :global(p) { margin-bottom: 18px; color: #3b4136; font-size: 1.05rem; }
+  .prose :global(h2) { font-size: 1.5rem; margin: 34px 0 12px; font-weight: 540; }
+  .prose :global(a) { color: var(--cobalt); text-decoration: underline; }
   .prose :global(img) { border-radius: 3px; margin: 24px 0; }
 </style>
